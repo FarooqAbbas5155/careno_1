@@ -6,6 +6,7 @@ import 'package:careno/AuthSection/screen_welcome.dart';
 import 'package:careno/Host/Views/Screens/screen_host_home_page.dart';
 import 'package:careno/User/views/screens/screen_user_home.dart';
 import 'package:careno/constant/my_helper_by_callofcoding.dart';
+import 'package:careno/models/add_host_vehicle.dart';
 import 'package:careno/models/categories.dart';
 import 'package:careno/models/rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,7 +21,9 @@ import 'dart:developer' as dev;
 
 
 import '../AuthSection/screen_complete_profile.dart';
+import '../Host/Views/Screens/screen_host_account_pending.dart';
 import '../Host/Views/Screens/screen_host_add_ident_identity_proof.dart';
+import '../Host/Views/Screens/screen_host_add_vehicle.dart';
 import '../interfaces/like_listener.dart';
 import '../models/user.dart';
 
@@ -135,11 +138,28 @@ User defaultUser = User(
 );
 
 Color primaryColor = Color(0xff4C0AE1);
+bool hasAddedVehicle = false;
+Future<bool> userHasAddedVehicle() async {
+  // Query the database to find all vehicles
+  var querySnapshot = await addVehicleRef.where('hostId', isEqualTo: uid).get();
+
+  if (querySnapshot.docs.isNotEmpty) {
+    // If there are any documents in the snapshot, it means the user has added a vehicle
+    hasAddedVehicle = true;
+  }
+
+  return hasAddedVehicle;
+}
+
+
 
 Future<Widget> getHomeScreen() async {
   Widget screen = ScreenLogin();
   if (auth.FirebaseAuth.instance.currentUser != null) {
     adminPercentage = await getAdminPercentage();
+    await userHasAddedVehicle();
+    print("hasAddedVehicle $hasAddedVehicle");
+
     var uid = auth.FirebaseAuth.instance.currentUser!.uid;
     var user = await getUser(uid);
     if (user.userType == "") {
@@ -150,7 +170,15 @@ Future<Widget> getHomeScreen() async {
       }
       else if (user.hostIdentity == null) {
         screen = ScreenHostAddIdentIdentityProof();
-      } else {
+      } else if (user.isVerified == false){
+      screen = ScreenHostAccountPending();
+      }
+      else if(user.isVerified == true){
+        if (hasAddedVehicle == false) {
+          screen = ScreenHostAddVehicle();
+        }
+      }
+      else {
         screen = ScreenHostHomePage();
       }
     } else {

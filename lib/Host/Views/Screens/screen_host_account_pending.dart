@@ -9,9 +9,9 @@ class ScreenHostAccountPending extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 3),(){
-      Get.to(ScreenHostAddVehicle());
-    });
+    // Future.delayed(Duration(seconds: 3),(){
+    //   Get.to(ScreenHostAddVehicle());
+    // });
     return SafeArea(
       child: Scaffold(
         
@@ -19,7 +19,7 @@ class ScreenHostAccountPending extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CustomSvg(name: "pending",),
-            Text("Thank you for your trust. Your request has been sent. We will try to approve you as soon as possible. Please check your email for approval status.",style: TextStyle(
+            Text("Thank you for your trust. Your request has been sent. We will try to approve you as soon as possible. you get notification for approval status.",style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w500,
               color: Colors.black.withOpacity(.8),
