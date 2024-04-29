@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "246128826023",
+    "project_id": "careno-app",
+    "storage_bucket": "careno-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246128826023:android:ed51aa90b48a47610ded82",
+        "android_client_info": {
+          "package_name": "com.layyahdevs.careno"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246128826023-qm4bi2so3cmkj264i7gqn5qbpaael56d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.layyahdevs.careno",
+            "certificate_hash": "2da02e3bcf698881932b03e7cddf20df36b8c85a"
+          }
+        },
+        {
+          "client_id": "246128826023-3npi7s5n11mab657tev22tcm1mubfp6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRPyUbcziYBpG4hJKXBy9F9CcC8n4RDYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246128826023-3npi7s5n11mab657tev22tcm1mubfp6e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "246128826023-8eipa5grl9nq4r2nniiaopmbasn8lt10.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.layyahdevs.careno"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
