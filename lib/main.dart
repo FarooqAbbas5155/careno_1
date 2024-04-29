@@ -23,6 +23,7 @@ void main() async {
   MpesaFlutterPlugin.setConsumerSecret("3iHObDhr69hGXYYKi32aHP5zWztEEGG8rbtdPyEiTsZlShTxoYur0c7DrMg3kChE");
   Stripe.publishableKey = PaymentsController2.stripePublishableKey;
   colorConfig();
+
   currencyUnit=getCurrency();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
