@@ -36,7 +36,7 @@ class PaymentHistoryModel {
       id: map['id'] as String,
       vehicleName: map['vehicleName'] as String,
       paymentMethod: map['paymentMethod'] as String,
-      paymentAmount: map['paymentAmount'] as double,
+      paymentAmount: double.parse(map['paymentAmount'].toString()) as double,
       senderName: map['senderName'] as String,
       paymentDate: map['paymentDate'] as String,
     );

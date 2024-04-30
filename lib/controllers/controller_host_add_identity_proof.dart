@@ -53,7 +53,7 @@ class ControllerHostAddIdentityProof extends GetxController {
       "hostWallet":defaultWallet.toMap(),
       "hostIdentity": hostIdentity.toMap(),
     }).then((value) {
-      // Get.offAll(ScreenHostAccountPending());
+      Get.offAll(ScreenHostAccountPending());
       response = "success";
       loading.value = false;
     }).catchError((error) {

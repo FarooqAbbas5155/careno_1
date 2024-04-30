@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "246128826023",
+    "firebase_url": "https://careno-app-default-rtdb.firebaseio.com",
     "project_id": "careno-app",
     "storage_bucket": "careno-app.appspot.com"
   },

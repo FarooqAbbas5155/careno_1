@@ -334,131 +334,133 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8),
-                        child: Row(
+                        child: Column(
                           mainAxisAlignment:
                           MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              children: [
-                                Card(
-                                  elevation: 2,
-                                  margin: EdgeInsets.zero,
-                                  shape: RoundedRectangleBorder(
+                            Card(
+                              margin: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              elevation: selectedOperator == 'Bank Transfer' ? 0:5,
+                              child: InkWell(
+                                borderRadius:
+                                BorderRadius.circular(8),
+                                onTap: () {
+                                  if (selectedOperator ==
+                                      'M-pesa' ||
+                                      selectedOperator ==
+                                          null) {
+                                    setState(() {
+                                      selectedOperator =
+                                      'Bank Transfer';
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  height: 90,
+                                  width: Get.width * 0.7,
+                                  decoration: BoxDecoration(
+                                      color: selectedOperator =="Bank Transfer" ?AppColors.appPrimaryColor :Colors.white,
                                       borderRadius:
                                       BorderRadius.circular(
-                                          12)),
-                                  color: Colors.white,
-                                  child: InkWell(
-                                    borderRadius:
-                                    BorderRadius.circular(12),
-                                    onTap: () {
-                                      if (selectedOperator ==
-                                          'M-pesa' ||
-                                          selectedOperator ==
-                                              null) {
-                                        setState(() {
-                                          selectedOperator =
-                                          'Bank Transfer';
-                                        });
-                                      }
-                                    },
-                                    child: Container(
-                                      height: 75,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                          BorderRadius.circular(
-                                              12),
-                                          border: Border.all(
-                                            width: 3,
-                                            color: AppColors.appPrimaryColor.withOpacity(0.6),
-                                          ),
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  'assets/images/bank_transfer.png'),
-                                              scale: 10),
-                                          boxShadow:
-                                          selectedOperator ==
-                                              'Bank Transfer'
-                                              ? [
-                                            BoxShadow(
-                                              color: AppColors.appPrimaryColor,
-                                              blurRadius:
-                                              12.0,
-                                              // Adjust the blur radius
-                                              spreadRadius:
-                                              1.0,
-                                            )
-                                          ]
-                                              : []),
-                                    ),
+                                          8),
+                                      border: Border.all(
+                                        width: 0.9,
+                                        color: AppColors.appPrimaryColor.withOpacity(0.6),
+                                      ),
+                                      // image: DecorationImage(
+                                      //     image: AssetImage(
+                                      //         'assets/images/bank_transfer.png'),
+                                      //     scale: 10),
+                                      // boxShadow:
+                                      // selectedOperator ==
+                                      //     'Bank Transfer'
+                                      //     ? [
+                                      //   BoxShadow(
+                                      //     color: AppColors.appPrimaryColor,
+                                      //     blurRadius:
+                                      //     12.0,
+                                      //     // Adjust the blur radius
+                                      //     spreadRadius:
+                                      //     1.0,
+                                      //   )
+                                      // ]
+                                      //     : []
+                                  ),
+
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.account_balance,size: 50,color: selectedOperator =="Bank Transfer" ?Colors.white :Colors.black,),
+                                      SizedBox(width: 10,),
+                                      Text('Bank Transfer',style: TextStyle(fontSize: 27,color: selectedOperator =="Bank Transfer" ?Colors.white :Colors.black,fontWeight: FontWeight.w900),)
+                                    ],
                                   ),
                                 ),
-                                SizedBox(height: 15,),
-                                Text('Bank Transfer',style: TextStyle(fontWeight: FontWeight.bold),)
-                              ],
+                              ),
                             ),
-                            Column(
-                              children: [
-                                Card(
-                                  elevation: 2,
-                                  margin: EdgeInsets.zero,
-                                  shape: RoundedRectangleBorder(
+                            SizedBox(height: 40,),
+                            Card(
+                              margin: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              elevation: selectedOperator == 'M-pesa' ? 0:5,
+                              child: InkWell(
+                                borderRadius:
+                                BorderRadius.circular(8),
+                                onTap: () {
+                                  if (selectedOperator ==
+                                      'Bank Transfer' ||
+                                      selectedOperator ==
+                                          null) {
+                                    setState(() {
+                                      selectedOperator =
+                                      'M-pesa';
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  height: 90,
+                                  width: Get.width * 0.7,
+                                  decoration: BoxDecoration(
+                                      color: selectedOperator == 'M-pesa' ?AppColors.appPrimaryColor:Colors.white,
                                       borderRadius:
                                       BorderRadius.circular(
-                                          12)),
-                                  color: Colors.white,
-                                  child: InkWell(
-                                    borderRadius:
-                                    BorderRadius.circular(12),
-                                    onTap: () {
-                                      if (selectedOperator ==
-                                          'Bank Transfer' ||
-                                          selectedOperator ==
-                                              null) {
-                                        setState(() {
-                                          selectedOperator =
-                                          'M-pesa';
-                                        });
-                                      }
-                                    },
-                                    child: Container(
-                                      height: 75,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                          BorderRadius.circular(
-                                              12),
-                                          border: Border.all(
-                                            width: 3,
-                                            color: AppColors.appPrimaryColor.withOpacity(0.6),
-                                          ),
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  'assets/images/Mpesa.png'),
-                                              scale: 10),
-                                          boxShadow:
-                                          selectedOperator ==
-                                              'M-pesa'
-                                              ? [
-                                            BoxShadow(
-                                              color: AppColors.appPrimaryColor,
-                                              blurRadius:
-                                              12.0,
-                                              // Adjust the blur radius
-                                              spreadRadius:
-                                              1.0,
-                                            )
-                                          ]
-                                              : []),
-                                    ),
+                                          8),
+                                      border: Border.all(
+                                        width: 0.9,
+                                        color: AppColors.appPrimaryColor.withOpacity(0.6),
+                                      ),
+                                      // image: DecorationImage(
+                                      //     image: AssetImage(
+                                      //         'assets/images/Mpesa.png'),
+                                      //     scale: 10),
+                                      // boxShadow:
+                                      // selectedOperator ==
+                                      //     'M-pesa'
+                                      //     ? [
+                                      //   BoxShadow(
+                                      //     color: AppColors.appPrimaryColor,
+                                      //     blurRadius:
+                                      //     12.0,
+                                      //     // Adjust the blur radius
+                                      //     spreadRadius:
+                                      //     1.0,
+                                      //   )
+                                      // ]
+                                      //     : []
+
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset('assets/images/Mpesa.png',width: 50,),
+                                      SizedBox(width: 10,),
+                                      Text('Mpesa Transfer',style: TextStyle(fontSize: 25,color: selectedOperator =="M-pesa" ?Colors.white :Colors.black,fontWeight: FontWeight.w900),)
+
+                                    ],
                                   ),
                                 ),
-                                SizedBox(height: 15,),
-                                Text('M-pesa',style: TextStyle(fontWeight: FontWeight.bold))
-                              ],
+                              ),
                             ),
                           ],
                         ),
@@ -504,10 +506,7 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
                                         value)) {
                                       return 'Please enter values between 0-9';
                                     }
-                                    if (value.length <
-                                        11) {
-                                      return 'Incorrect Account Number';
-                                    }
+
                                     return null;
                                   },
                                   onTapOutside: (event) {
@@ -519,10 +518,7 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
                                     withdrawRequest.accountNumber =
                                         newValue ?? '';
                                   },
-                                  inputFormatters: [
-                                    LengthLimitingTextInputFormatter(
-                                        11)
-                                  ],
+
                                   keyboardType: TextInputType
                                       .numberWithOptions(
                                       decimal: false,
@@ -546,7 +542,7 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
                                           horizontal:
                                           18),
                                       hintText:
-                                      '03XXXXXXXXX',
+                                      '254XXXXXXXX',
                                       border: inputBorder(
                                           enableBorder:
                                           true),
@@ -720,6 +716,10 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
                                     withdrawRequest.hostId =widget.userObject.uid;
                                     withdrawRequest.dateTime =DateTime.now().toString();
                                     withdrawRequest.requestStatus = 'pending';
+                                    withdrawRequest.email = widget.userObject.email;
+                                    withdrawRequest.hostName = widget.userObject.name;
+                                    withdrawRequest.profilePic = widget.userObject.imageUrl;
+                                    withdrawRequest.hostPhoneNumber = widget.userObject.phoneNumber;
                                     isLoading.value = true;
 
                                     await makeWithdrawRequest(userObject: widget.userObject, withdrawRequest: withdrawRequest).then((value) {
