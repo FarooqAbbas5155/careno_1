@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../Host/Views/Screens/screen_host_account_pending.dart';
+import '../constant/fcm.dart';
 import '../constant/firebase_utils.dart';
 import '../models/host_identity.dart';
 
@@ -12,8 +13,11 @@ class ControllerHostAddIdentityProof extends GetxController {
   RxString idFrontPath = "".obs;
   RxString idBackPath = "".obs;
   RxBool loading = false.obs;
-
-  Future<String> updateIdentityProof() async {
+  @override
+  void onInit() {
+    updateToken();
+    super.onInit();
+  }  Future<String> updateIdentityProof() async {
     String id = FirebaseAuth.instance.currentUser!.uid;
     String response = '';
     loading.value = true;
@@ -61,5 +65,9 @@ class ControllerHostAddIdentityProof extends GetxController {
       loading.value = false;
     });
     return response;
+  }
+  void updateToken() async {
+    var token = (await FCM.generateToken()) ?? "";
+    usersRef.doc(uid).update({"notificationToken": token});
   }
 }

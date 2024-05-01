@@ -1,6 +1,11 @@
 import 'package:careno/Host/Views/Layouts/layout_host_booking.dart';
+import 'package:careno/Host/Views/Screens/screen_host_account_pending.dart';
+import 'package:careno/Host/Views/Screens/screen_host_add_ident_identity_proof.dart';
+import 'package:careno/Host/Views/Screens/screen_host_home_page.dart';
+import 'package:careno/constant/colors.dart';
 import 'package:careno/constant/helpers.dart';
 import 'package:careno/controllers/home_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +15,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../constant/firebase_utils.dart';
+import '../../../widgets/center_floating_button/src/simple_speed_dial.dart';
+import '../../../widgets/center_floating_button/src/simple_speed_dial_child.dart';
 import '../layouts/layout_user_booking.dart';
 import '../layouts/layout_user_explore.dart';
 import '../layouts/layout_user_messages.dart';
@@ -66,6 +73,41 @@ class _ScreenUserHomeState extends State<ScreenUserHome> with WidgetsBindingObse
               ],
             );
           }),
+          floatingActionButton: SpeedDial(
+            child:  Icon(Icons.change_circle),
+            speedDialChildren: <SpeedDialChild>[
+              SpeedDialChild(
+                child:  Icon(Icons.verified_user_outlined,),
+                foregroundColor: Colors.white,
+                backgroundColor: AppColors.appPrimaryColor,
+                label: 'Switch to Host Mode',
+                onPressed: () async {
+
+                  var uid = FirebaseAuth.instance.currentUser!.uid;
+                  var user = await getUser(uid);
+                   if (user.hostIdentity == null) {
+                  Get.to(ScreenHostAddIdentIdentityProof());
+                  } else if (user.isVerified == false){
+                   Get.to(ScreenHostAccountPending());
+                  }
+                  else if(user.isVerified == true) {
+                    await usersRef.doc(getUid()).update({
+                      "userType": "host"
+                    }).then((value) {
+                      Get.offAll(ScreenHostHomePage());
+
+                    });
+                  }
+
+                },
+              ),
+            ],
+            closedForegroundColor: Colors.black,
+            openForegroundColor: Colors.white,
+            closedBackgroundColor: Colors.white,
+            openBackgroundColor: Colors.black,
+            lable: Text("Switch to Host Mode"),
+          ),
           bottomNavigationBar: BottomAppBar(
             color: Colors.white,
             // notchMargin: 10,

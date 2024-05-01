@@ -11,12 +11,16 @@ import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_svg.dart';
 
 class ScreenHostSetting extends StatelessWidget {
-  RxBool isNotification = true.obs;
 
   @override
   Widget build(BuildContext context) {
+    RxBool isNotification = true.obs;
     ControllerHostHome controller = Get.put(ControllerHostHome());
-   isNotification.value =controller.user.value!.notification;
+    // Check if controller.user.value is not null before accessing its properties
+    if (controller.user.value != null) {
+      // Use the null aware operator ?? to provide a default value if notification is null
+      isNotification.value = controller.user.value!.notification ?? false;
+    }
     return SafeArea(child: Scaffold(
       appBar: AppBar(
         title: Text("Setting"),

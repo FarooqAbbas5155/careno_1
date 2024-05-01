@@ -14,7 +14,7 @@ class LayoutHostPendingVehicle extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: addVehicleRef
-          .where("status", isEqualTo: "Pending")
+          .where("isVerified", isEqualTo: false)
           .where("hostId", isEqualTo: FirebaseUtils.myId)
           .snapshots(),
       builder: (BuildContext context, snapshot) {

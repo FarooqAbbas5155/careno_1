@@ -61,7 +61,7 @@ class ScreenHostVehicleMyDetail extends StatelessWidget {
                               ? Color(0xFF3C79E6)
                               : addHostVehicle.status == "Completed"
                                   ? Color(0xFF0F9D58)
-                                  : Color(0xFFFF2021),
+                                  : addHostVehicle.status  == "Reject"?Colors.red:Color(0xFFFF2021),
                       fontSize: 12.sp),
                 ).marginOnly(bottom: 4.h, top: 4.h),
               ],

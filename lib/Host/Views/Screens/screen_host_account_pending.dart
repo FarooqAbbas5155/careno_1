@@ -1,12 +1,12 @@
 import 'package:careno/Host/Views/Screens/screen_host_add_vehicle.dart';
+import 'package:careno/controllers/controller_host_add_identity_proof.dart';
 import 'package:careno/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ScreenHostAccountPending extends StatelessWidget {
-  const ScreenHostAccountPending({Key? key}) : super(key: key);
-
+  ControllerHostAddIdentityProof controller = Get.put(ControllerHostAddIdentityProof());
   @override
   Widget build(BuildContext context) {
     // Future.delayed(Duration(seconds: 3),(){

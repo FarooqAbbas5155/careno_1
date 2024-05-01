@@ -40,6 +40,9 @@ CollectionReference viewsRef = dbInstance.collection("views");
 CollectionReference bookingsRef = dbInstance.collection("bookings");
 CollectionReference reviewRef = dbInstance.collection("reviews");
 CollectionReference notificationRef = dbInstance.collection("notifications");
+CollectionReference bannerRef = dbInstance.collection("promotionalBanner");
+ CollectionReference termsAndConditionsCollection = dbInstance.collection('termsAndConditions');
+ CollectionReference policyCollection = dbInstance.collection('policy');
 
 Map<String, User> _allUsersMap = {};
 Map<String, Category> _allCategoryMap = {};

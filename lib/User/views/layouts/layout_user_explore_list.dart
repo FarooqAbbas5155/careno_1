@@ -1,3 +1,6 @@
+import 'package:card_swiper/card_swiper.dart';
+import 'package:careno/models/promotion_banner.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -15,6 +18,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../screens/full_image_view.dart';
 import '../screens/screen_filter.dart';
 import '../screens/screen_preview_category.dart';
 import '../screens/screen_search_result.dart';
@@ -22,7 +26,8 @@ import 'item_layout_explore_image.dart';
 import 'item_layout_explore_popular.dart';
 import 'layout_vehicle_google_map.dart';
 class LayoutUserExploreList extends StatelessWidget {
-HomeController controller;
+HomeController controller = Get.put(HomeController());
+var des;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -167,18 +172,106 @@ HomeController controller;
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                StreamBuilder<QuerySnapshot>(
+                  stream: bannerRef.snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator.adaptive(
+                          backgroundColor: AppColors.appPrimaryColor,
+                        ),
+                      );
+                    }
 
-                Container(
-                  alignment: Alignment.center,
-                  height: 177.h,
-                  width: 345.w,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5.r),
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/car.png"),
-                          fit: BoxFit.fill)),
-                ).marginSymmetric(vertical: 14.h),
+                    var banners = snapshot.data!.docs.map((e) =>
+                        PromotionBanner.fromMap(e.data() as Map<String, dynamic>)).toList();
+
+                    // Define index here
+                    int index = 0;
+
+                    return banners.isNotEmpty ? ConstrainedBox(
+                      child: Stack(
+                        children: [
+                          Swiper(
+                            outer: false,
+                            itemBuilder: (context, i) {
+                              index = i; // Assign the current index to the outer variable
+                              var banner = banners[i];
+                              return Container(
+                                margin: EdgeInsets.symmetric(vertical: 8.h),
+                                height: 177.h,
+                                width: Get.width,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.r),
+                                ),
+                                child: Swiper(
+                                  itemBuilder: (BuildContext context, int imageIndex) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        // Pass the tapped image URL to FullImageView
+                                        Get.to(FullImageView(imageUrl: banner.imageList[imageIndex],des: banners[index].description,));
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15.r),
+                                        ),
+                                        child: Image.network(
+                                          banner.imageList[imageIndex],
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  pagination: SwiperPagination(
+                                    margin: EdgeInsets.symmetric(vertical: 15.h),
+                                  ),
+                                  itemCount: banner.imageList.length,
+                                ),
+                              );
+                            },
+                            itemCount: banners.length,
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              padding: EdgeInsets.all(8.0),
+                              color: Colors.transparent,
+                              child: Text(
+                                banners.isNotEmpty ? banners[index].description : '',
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.appPrimaryColor,
+                                  fontFamily: "Nunito"
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      constraints: BoxConstraints.loose(Size(Get.width, 177.0.h)),
+                    ) : Container(
+                      margin: EdgeInsets.symmetric(vertical: 8.h),
+                      height: 177.h,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.r),
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.appPrimaryColor,
+                            Colors.white
+                          ],
+                          begin: Alignment.topCenter,
+                          end: FractionalOffset.bottomCenter,
+                        ),
+                      ),
+                    );
+                  },
+                ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 3.h),
                   child: Text(
@@ -245,17 +338,18 @@ HomeController controller;
                     ),
                   ],
                 ),
-                Obx(() =>  controller.addhostvehicle.value != null ? ListView.builder(
+                Obx(() =>  controller.popularVehicle.value.isNotEmpty ? ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: controller.addhostvehicle.value.length,
+                  itemCount: controller.popularVehicle.value.length,
                   itemBuilder: (BuildContext context, int index) {
-                    var vehicle =  controller.addhostvehicle.value[index];
+                    var vehicle =  controller.popularVehicle.value[index];
                     return ItemLayoutExplorePopular(addHostVehicle: vehicle,);
                   },
-                ):Center(
-                  child: CircularProgressIndicator(color: AppColors.appPrimaryColor,),
+                ):Align(
+                  alignment: Alignment.center,
+                  child: Text("........",style: TextStyle(color: AppColors.appPrimaryColor,fontWeight: FontWeight.w800),),
                 ))
               ],
             ).marginSymmetric(horizontal: 14.w),

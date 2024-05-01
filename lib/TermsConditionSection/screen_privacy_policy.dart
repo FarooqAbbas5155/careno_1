@@ -1,5 +1,10 @@
+import 'package:careno/constant/colors.dart';
+import 'package:careno/constant/helpers.dart';
+import 'package:careno/models/policy.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ScreenPrivacyPolicy extends StatelessWidget {
   const ScreenPrivacyPolicy({Key? key}) : super(key: key);
@@ -14,37 +19,48 @@ class ScreenPrivacyPolicy extends StatelessWidget {
           title: Text("Privacy Policy"),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        body: StreamBuilder<QuerySnapshot>(
+          stream: policyCollection.snapshots(),
+          builder: (context, snapshot) {
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Center(child: CircularProgressIndicator.adaptive(backgroundColor: AppColors.appPrimaryColor,),);
+            }
+            var policys = snapshot.data!.docs.map((e) => Policy.fromMap(e.data() as Map<String,dynamic>)).toList();
+            return policys.isNotEmpty?ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: policys.length,
+            itemBuilder: (BuildContext context, int index) {
+                var policy = policys[index];
+            return  Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Text("Last Update on 24 March, 2024",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.sp,
-                        color: Color(0xFF767676)
-                    )
-                ),
-              ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  //   child: Text("Last Update on 24 March, 2024",
+                  //       style: TextStyle(
+                  //           fontWeight: FontWeight.w600,
+                  //           fontSize: 15.sp,
+                  //           color: Color(0xFF767676)
+                  //       )
+                  //   ),
+                  // ),
 
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
-                padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFFECECEC)
-                ),
-                child: Text("Help protect your website and its users with clear and fair website terms and conditions. These terms and conditions for a website set out key issues such as acceptable use, privacy, cookies, registration and passwords, intellectual property, links to other sites, termination and disclaimers of responsibility. Terms and conditions are used and necessary to protect a website owner from liability of a user relying on the information or the goods provided from the site then suffering a loss.Help protect your website and its users with clear and fair website terms and conditions. These terms and conditions for a website set out key issues such as acceptable use, privacy, cookies, registration and passwords, intellectual property, links to other sites, termination and disclaimers of responsibility. Terms and conditions are used and necessary to protect a website owner from liability of a user relying on the information or the goods provided from the site then suffering a loss.Help protect your website and its users with clear and fair website terms and conditions. These terms and conditions for a website set out key issues such as acceptable use, privacy, cookies, registration and passwords, intellectual property, links to other sites, termination and disclaimers of responsibility. Terms and conditions are used and necessary to protect a website owner from liability of a user relying on the information or the goods provided from the site then suffering a loss.Help protect your website and its users with clear and fair website terms and conditions. These terms and conditions for a website set out key issues such as acceptable use, privacy, cookies, registration and passwords, intellectual property, links to other sites, termination and disclaimers of responsibility. Terms and conditions are used and necessary to protect a website owner from liability of a user relying on the information or the goods provided from the site then suffering a loss.",
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w500
-                ),
-                ),
-              ),
-            ],),
+                  Text(policy.title,style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w800
+                    ),
+                  ).marginSymmetric(horizontal: 18.w,vertical: 10.h),
+                  Text(policy.description,style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400
+                    ),
+                  ).marginSymmetric(horizontal: 18.w),
+                ],);
+            },
+            ):Center(child: Text("Nothing Found Yet",style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w600,),),);
+          }
         ),
       ),
     );

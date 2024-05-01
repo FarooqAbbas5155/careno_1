@@ -16,7 +16,7 @@ class _ScreenSearchResultState extends State<ScreenSearchResult> {
   final TextEditingController _searchController = TextEditingController();
 
   RxString search = "".obs;
-
+  List<AddHostVehicle> searhResult = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -73,7 +73,7 @@ class _ScreenSearchResultState extends State<ScreenSearchResult> {
                       color: Colors.black,
                       fontSize: 14.sp,
                       fontFamily: "Urbanist"),
-                  hintText: "Luxury Car",
+                  hintText: "Search Car Mode Name...",
                   contentPadding: EdgeInsets.only(left: 12, top: 15.h),
                   fillColor: Color(0xffF0F0F0),
                   prefixIcon: Icon(
@@ -109,8 +109,8 @@ class _ScreenSearchResultState extends State<ScreenSearchResult> {
 
                 // Apply search filter if search value is not empty
                 if (search.value.isNotEmpty) {
-                  vehicleList = vehicleList.where((vehicle) =>
-                      vehicle.vehicleColor.toLowerCase().startsWith(
+                  searhResult = vehicleList.where((vehicle) =>
+                      vehicle.vehicleModel.toLowerCase().startsWith(
                           search.value.toLowerCase())).toList();
                 }
 
@@ -119,7 +119,7 @@ class _ScreenSearchResultState extends State<ScreenSearchResult> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${vehicleList.length} results found",
+                      "${searhResult.length} results found",
                       style: TextStyle(
                         color: Colors.grey,
                         fontFamily: "Urbanist",
@@ -129,9 +129,9 @@ class _ScreenSearchResultState extends State<ScreenSearchResult> {
                     ).marginSymmetric(horizontal: 14.w),
                     ListView.builder(
                       shrinkWrap: true,
-                      itemCount: vehicleList.length,
+                      itemCount: searhResult.length,
                       itemBuilder: (BuildContext context, int index) {
-                        var vehicle = vehicleList[index];
+                        var vehicle = searhResult[index];
                         return ItemLayoutExplorePopular(
                             addHostVehicle: vehicle);
                       },

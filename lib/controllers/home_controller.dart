@@ -35,8 +35,10 @@ class HomeController extends GetxController {
   RxInt selectIndex = 0.obs;
   RxList<Category> allCategory= RxList<Category>([]);
   RxList<AddHostVehicle> addhostvehicle= RxList<AddHostVehicle>([]);
+  RxList<AddHostVehicle> popularVehicle = RxList<AddHostVehicle>([]);
   Stream<QuerySnapshot>? categoriesSnapshot;
   Stream<QuerySnapshot>? vehicleSnapshot;
+  Stream<QuerySnapshot>? popularVehicleSnapshot;
 
 
 // DateTime? dateTime;
@@ -45,9 +47,11 @@ class HomeController extends GetxController {
 updateToken();
 UserStream();
 vehicleSnapshot = addVehicleRef.snapshots();
+popularVehicleSnapshot = addVehicleRef.where("rating",isGreaterThanOrEqualTo: 4).snapshots();
 
 categoriesSnapshot = categoryRef.snapshots();
 addhostvehicle.bindStream(vehicleSnapshot!.map((vehicle) => vehicle.docs.map((e) => AddHostVehicle.fromMap(e.data() as Map<String, dynamic>)).toList()));
+popularVehicle.bindStream(popularVehicleSnapshot!.map((vehicle) => vehicle.docs.map((e) => AddHostVehicle.fromMap(e.data() as Map<String, dynamic>)).toList()));
 getHostBookingList();
 allCategory.bindStream(categoriesSnapshot!.map((category) => category.docs.map((e) => Category.fromMap(e.data() as Map<String, dynamic>)).toList()));
 super.onInit();

@@ -9,9 +9,12 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../../User/views/layouts/layout_user_messages.dart';
 import '../../../User/views/screens/screen_user_home.dart';
+import '../../../constant/colors.dart';
 import '../../../constant/firebase_utils.dart';
 import '../../../constant/helpers.dart';
 import '../../../controllers/controller_host_home.dart';
+import '../../../widgets/center_floating_button/src/simple_speed_dial.dart';
+import '../../../widgets/center_floating_button/src/simple_speed_dial_child.dart';
 
 class ScreenHostHomePage extends StatefulWidget {
   @override
@@ -55,6 +58,31 @@ ControllerHostHome controller=Get.put(ControllerHostHome());
     return SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
+          floatingActionButton: SpeedDial(
+            child:  Icon(Icons.change_circle),
+            speedDialChildren: <SpeedDialChild>[
+              SpeedDialChild(
+                child:  Icon(Icons.verified_user_outlined,),
+                foregroundColor: Colors.white,
+                backgroundColor: AppColors.appPrimaryColor,
+                label: 'Switch to Buyer Mode',
+                onPressed: () async {
+                  await usersRef.doc(getUid()).update({
+                    "userType": "user"
+                  }).then((value) {
+                    Get.offAll(ScreenUserHome());
+
+                  });
+
+                },
+              ),
+            ],
+            closedForegroundColor: Colors.black,
+            openForegroundColor: Colors.white,
+            closedBackgroundColor: Colors.white,
+            openBackgroundColor: Colors.black,
+            lable: Text("Switch to Buyer Mode"),
+          ),
           body: Obx(() {
             return Layouts[controller.selectHostIndex.value];
           }),

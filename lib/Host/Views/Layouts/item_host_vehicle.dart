@@ -82,8 +82,7 @@ String? categoryName;
                       fontStyle: FontStyle.italic,
                       color: addHostVehicle!.status == "Pending"
                           ? Color(0xFFFB9701)
-
-                          : Color(0xFF00A651),
+                          : addHostVehicle!.status == "Active"?Color(0xFF00A651):Colors.redAccent,
 
                       fontSize: 12.sp),
                 ),
