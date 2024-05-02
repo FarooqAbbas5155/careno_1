@@ -100,7 +100,8 @@ class ScreenOtp extends StatelessWidget {
                 ),
               ),
               Center(child: CustomButton(title: "Verify", onPressed: (){
-                controller.verifyPin(code);
+                print('--------${FirebaseAuth.instance.currentUser}');
+                        controller.verifyPin(code);
                 // Get.to(ScreenCompleteProfile());
               })).marginSymmetric(vertical: 30.h),
               Center(

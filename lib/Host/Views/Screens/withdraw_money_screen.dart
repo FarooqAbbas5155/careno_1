@@ -14,7 +14,7 @@ import '../../../constant/my_helper_by_callofcoding.dart';
 class WithdrawMoneyScreen extends StatefulWidget {
   final User userObject;
    WithdrawMoneyScreen({super.key,required this.userObject});
-   
+
 
   @override
   State<WithdrawMoneyScreen> createState() => _WithdrawMoneyScreenState();
@@ -468,201 +468,80 @@ class _WithdrawMoneyScreenState extends State<WithdrawMoneyScreen> {
                       selectedOperator != null
                           ? Column(
                         children: [
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.start,
-                            children: [
-                              Text(' Account Number',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight:
-                                      FontWeight
-                                          .bold))
-                            ],
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.start,
+
+                          selectedOperator == 'M-pesa'? Column(children: [
+                            SizedBox(
+                              height: 30,
+                            ),
+
+                            customTextFieldWithHeading(heading: 'Account Number', errorMsg: 'Account Number Required', iconData: Icons.account_balance_sharp,addValidationForNumber: true,keyboardType:  TextInputType.numberWithOptions(decimal: false, signed: false),hintText: '254XXXXXXXX',
+                                onSaved: (newValue) {
+                              withdrawRequest.accountNumber =
+                                  newValue ?? '';
+                            }),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],):Column(
                             children: [
                               SizedBox(
-                                height: 70,
-                                width: 240,
-                                child: TextFormField(
-                                  autovalidateMode:
-                                  AutovalidateMode
-                                      .onUserInteraction,
-                                  validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty) {
-                                      return 'Account Number Required';
-                                    }
-                                    if (!isNumeric(
-                                        value)) {
-                                      return 'Please enter values between 0-9';
-                                    }
+                                height: 30,
+                              ),
+                              customTextFieldWithHeading(
+                                  heading: 'Bank Name',
+                                  errorMsg: 'Bank Name Required',
+                                  iconData: Icons.account_balance_sharp,
+                                  keyboardType:  TextInputType.text,
+                                  hintText: 'e.g Chase Bank',
+                                  onSaved: (newValue) {
 
-                                    return null;
-                                  },
-                                  onTapOutside: (event) {
-                                    FocusManager.instance
-                                        .primaryFocus
-                                        ?.unfocus();
-                                  },
+                                  }),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              customTextFieldWithHeading(
+                                  heading: 'Account Holder Name',
+                                  errorMsg: 'Account Holder Name Required',
+                                  iconData: Icons.account_balance_sharp,
+                                  keyboardType:  TextInputType.text,
+                                  hintText: 'e.g James',
+                                  onSaved: (newValue) {
+
+                                  }),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              customTextFieldWithHeading(
+                                  heading: 'Account Number',
+                                  errorMsg: 'Account Number Required',
+                                  iconData: Icons.account_balance_sharp,
+                                  addValidationForNumber: true,
+                                  keyboardType:  TextInputType.numberWithOptions(decimal: false, signed: false),
+                                  hintText: 'XXXXXXXXXXXXX',
                                   onSaved: (newValue) {
                                     withdrawRequest.accountNumber =
                                         newValue ?? '';
-                                  },
+                                  }),
 
-                                  keyboardType: TextInputType
-                                      .numberWithOptions(
-                                      decimal: false,
-                                      signed: false),
-                                  decoration:
-                                  InputDecoration(
-                                      prefixIcon:
-                                      Icon(
-                                        Icons
-                                            .account_balance_sharp,
-                                        color: AppColors.appPrimaryColor,
-                                      ),
-                                      constraints:
-                                      BoxConstraints(
-                                          minHeight:
-                                          50),
-                                      contentPadding:
-                                      EdgeInsets.symmetric(
-                                          vertical:
-                                          13,
-                                          horizontal:
-                                          18),
-                                      hintText:
-                                      '254XXXXXXXX',
-                                      border: inputBorder(
-                                          enableBorder:
-                                          true),
-                                      focusedBorder: inputBorder(
-                                          enableBorder:
-                                          true),
-                                      enabledBorder: inputBorder(
-                                          enableBorder:
-                                          true),
-                                      errorBorder: inputBorder(
-                                        enableBorder:
-                                        true,
-                                        color: Colors
-                                            .red,
-                                      )),
-                                ),
+                              SizedBox(
+                                height: 20,
                               ),
+                              customTextFieldWithHeading(
+                                  heading: 'Bank Address',
+                                  errorMsg: 'Bank Address Required',
+                                  iconData: Icons.account_balance_sharp,
+                                  keyboardType: TextInputType.streetAddress,
+                                  hintText:
+                                  """270 Park Avenue
+New York, NY 10017
+United States""",
+                                  maxLine: 3,
+                                  onSaved: (newValue) {
+
+                                  }),
+                              SizedBox(height: 20,)
                             ],
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          // Row(
-                          //   mainAxisAlignment:
-                          //       MainAxisAlignment.start,
-                          //   children: [
-                          //     Text(
-                          //         '${selectedOperator ?? ''} Account Holder',
-                          //         style: TextStyle(
-                          //             fontSize: 18,
-                          //             fontWeight:
-                          //                 FontWeight
-                          //                     .bold))
-                          //   ],
-                          // ),
-                          // SizedBox(
-                          //   height: 4,
-                          // ),
-                          // Row(
-                          //   mainAxisAlignment:
-                          //       MainAxisAlignment.start,
-                          //   children: [
-                          //     SizedBox(
-                          //       height: 100,
-                          //       width: 240,
-                          //       child: TextFormField(
-                          //         autovalidateMode:
-                          //             AutovalidateMode
-                          //                 .onUserInteraction,
-                          //         validator: (value) {
-                          //           if (value == null ||
-                          //               value.isEmpty) {
-                          //             return 'Name Required';
-                          //           }
-                          //           return null;
-                          //         },
-                          //         onTapOutside: (event) {
-                          //           FocusManager.instance
-                          //               .primaryFocus
-                          //               ?.unfocus();
-                          //         },
-                          //         onSaved:
-                          //             (String? newValue) {
-                          //           // setState(() {
-                          //           //   withdrawObject
-                          //           //           .accountHolderName =
-                          //           //       newValue ?? '';
-                          //           //   print(
-                          //           //       'value is : $newValue\nobject value ${withdrawObject.accountHolderName}');
-                          //           // });
-                          //         },
-                          //         keyboardType:
-                          //             TextInputType.text,
-                          //         decoration:
-                          //             InputDecoration(
-                          //                 prefixIcon:
-                          //                     Icon(
-                          //                   Icons
-                          //                       .person_outline,
-                          //                   color: AppColors.appPrimaryColor,
-                          //                 ),
-                          //                 constraints:
-                          //                     BoxConstraints(
-                          //                         minHeight:
-                          //                             50),
-                          //                 contentPadding:
-                          //                     EdgeInsets.symmetric(
-                          //                         vertical:
-                          //                             13,
-                          //                         horizontal:
-                          //                             18),
-                          //                 hintText:
-                          //                     'Name',
-                          //                 helperMaxLines:
-                          //                     2,
-                          //                 helperStyle:
-                          //                     TextStyle(
-                          //                         fontSize:
-                          //                             15),
-                          //                 helperText:
-                          //                     'This name is same as it appears on ${selectedOperator ?? ''} app.',
-                          //                 border: inputBorder(
-                          //                         enableBorder:
-                          //                             true),
-                          //                 focusedBorder: inputBorder(
-                          //                         enableBorder:
-                          //                             true),
-                          //                 enabledBorder: inputBorder(
-                          //                         enableBorder:
-                          //                             true),
-                          //                 errorBorder: inputBorder(
-                          //                   enableBorder:
-                          //                       true,
-                          //                   color: Colors
-                          //                       .red,
-                          //                 )),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
 
                           ValueListenableBuilder(valueListenable: amount, builder: (context, value, child) {
                             return Column(

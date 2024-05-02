@@ -98,7 +98,7 @@ class LayoutHostEarning extends StatelessWidget {
                                       color: Color(0xFF969696)),
                                 ),
                                 subtitle: Text(
-                                  '${userObject.hostWallet?.currentBalance}',
+                                  '${userObject.hostWallet?.currentBalance?.toStringAsFixed(2)}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 25.sp,

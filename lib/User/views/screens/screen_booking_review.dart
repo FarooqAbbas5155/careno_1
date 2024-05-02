@@ -1,5 +1,6 @@
 import 'package:careno/User/views/screens/screen_user_home.dart';
 import 'package:careno/constant/colors.dart';
+import 'package:careno/constant/my_helper_by_callofcoding.dart';
 import 'package:careno/controllers/booking_controller.dart';
 import 'package:careno/controllers/home_controller.dart';
 import 'package:careno/models/add_host_vehicle.dart';
@@ -23,10 +24,9 @@ class ScreenBookingReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var percentageValue =
-        controller.price.value / 100 * controller.percentage.value;
-    controller.TotalVehicleRent.value =
-        percentageValue + controller.price.value;
+    // var percentageValue =
+    //     controller.price.value / 100 * controller.percentage.value;
+    // controller.TotalVehicleRent.value = percentageValue + controller.price.value;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -310,7 +310,7 @@ class ScreenBookingReview extends StatelessWidget {
                     BookingSummary("Subtotal",
                         "${currencyUnit}${controller.price.value.toStringAsFixed(0)}"),
                     BookingSummary(
-                        "Service Fee", "${currencyUnit}${percentageValue}"),
+                        "Service Fee", "${currencyUnit}${((controller.price.value * adminPercentage!) / 100).toStringAsFixed(1)}"),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -323,7 +323,7 @@ class ScreenBookingReview extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "${currencyUnit}${controller.TotalVehicleRent.value.round()}",
+                          "${currencyUnit}${calculateAmountForUser(controller.price.value).toStringAsFixed(1)}",
                           style: TextStyle(
                               color: AppColors.appPrimaryColor,
                               fontSize: 16.sp,

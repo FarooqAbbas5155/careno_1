@@ -4,6 +4,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:careno/User/views/screens/screen_booking.dart';
 import 'package:careno/User/views/screens/screen_booking_review.dart';
 import 'package:careno/User/views/screens/screen_user_chat.dart';
+import 'package:careno/constant/my_helper_by_callofcoding.dart';
 import 'package:careno/controllers/controller_review.dart';
 import 'package:careno/controllers/home_controller.dart';
 import 'package:careno/models/add_host_vehicle.dart';
@@ -40,7 +41,7 @@ class ScreenBookingDetails extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
-    Future<int> makePaymentWithMpaisa()async{
+    Future<MpesaResponse> makePaymentWithMpaisa()async{
       String key = password("174379", 'asdf1234');
       Mpesa mpesa = Mpesa(
           shortCode: "174379",
@@ -71,91 +72,97 @@ class ScreenBookingDetails extends StatelessWidget {
       print(_res.responseDescription);
 
 
-      return _res.statusCode;
+      return _res;
 
     }
 
     Future<void> showMepaisaPaymentBottomSheet(String amount,void Function()? onPay)async{
-      await showModalBottomSheet(context: context, builder: (context) {
-        return Container(
-          padding: EdgeInsets.all(14),
-          height: Get.height * 0.35,
-          color: AppColors.customColor('#1d2021'),
-          child: Column(
-            children: [
-              SizedBox(height: 8,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Add your M-paisa Details',
-                    style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18,fontFamily: 'Poppins',color: Colors.white),
-                  ),
-                  SizedBox(width: 40,),
-                  Image.asset('assets/images/me_paisa.png',width: 20,height: 20,),
-                ],
-              ),
-              SizedBox(height: 25,),
-              SizedBox(
-                width: Get.width *0.8,
-                // height: 50,
-                child: TextFormField(
-                  // textAlign: TextAlign.center,
-                  onTapOutside: (event) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
-                  controller: _mpaisaNumberController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) {
-                    if(value==null || value.isEmpty){
-                      return 'Please enter valid number';
-                    }
-                    if(int.tryParse(value) == null){
-                      return 'Enter a valid number 0-9';
-                    }
-                    return null;
-                  },
-                  style: TextStyle(color: Colors.white),
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: AppColors.customColor('#42474a'),
-                    contentPadding: EdgeInsets.all(12),
-                    // : '+254',
-                    // prefixStyle: TextStyle(color: Colors.white),
-                    prefix: SizedBox(
-                        width: 40.w,
-                        child: Text('+254',style: TextStyle(color: Colors.white60),)),
-                    hintText: 'M-paisa Mobile Number',
-                    hintStyle: TextStyle(color: Colors.white,fontSize: 14,),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8),borderSide: BorderSide(color: Colors.white60,width: 0.8,)),
-                      border:  OutlineInputBorder(borderRadius: BorderRadius.circular(8),borderSide: BorderSide(color: Colors.white60,width: 0.8,)),
-                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8),borderSide: BorderSide(color: Colors.white60,width: 0.8,)),
-                      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8),borderSide: BorderSide(color: Colors.red,width: 1.2,))
-                  ),
-                ),
-              ),
-              SizedBox(height: 15,),
-              SizedBox(
-                width: Get.width * 0.75,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+      await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: Container(
+            padding: EdgeInsets.all(14),
+            height: Get.height * 0.35,
+            color: AppColors.customColor('#1d2021'),
+            child: Column(
+              children: [
+                SizedBox(height: 8,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Add description as needed',style: TextStyle(fontSize: 14,color: Colors.white60,fontWeight: FontWeight.w400),),
+                    Text(
+                      'Add your M-paisa Details',
+                      style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18,fontFamily: 'Poppins',color: Colors.white),
+                    ),
+                    SizedBox(width: 40,),
+                    Image.asset('assets/images/me_paisa.png',width: 20,height: 20,),
                   ],
                 ),
-              ),
-
-              Spacer(),
-              // we can specify price unit later
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    minimumSize: Size(Get.width * 0.8, 40)
+                SizedBox(height: 25,),
+                SizedBox(
+                  width: Get.width *0.8,
+                  // height: 50,
+                  child: TextFormField(
+                    // textAlign: TextAlign.center,
+                    onTapOutside: (event) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    controller: _mpaisaNumberController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if(value==null || value.isEmpty){
+                        return 'Please enter valid number';
+                      }
+                      if(int.tryParse(value) == null){
+                        return 'Enter a valid number 0-9';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(color: Colors.white),
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: AppColors.customColor('#42474a'),
+                        contentPadding: EdgeInsets.all(12),
+                        // : '+254',
+                        // prefixStyle: TextStyle(color: Colors.white),
+                        prefix: SizedBox(
+                            width: 40.w,
+                            child: Text('+254',style: TextStyle(color: Colors.white60),)),
+                        hintText: 'M-paisa Mobile Number',
+                        hintStyle: TextStyle(color: Colors.white,fontSize: 14,),
+                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8),borderSide: BorderSide(color: Colors.white60,width: 0.8,)),
+                        border:  OutlineInputBorder(borderRadius: BorderRadius.circular(8),borderSide: BorderSide(color: Colors.white60,width: 0.8,)),
+                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8),borderSide: BorderSide(color: Colors.white60,width: 0.8,)),
+                        errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8),borderSide: BorderSide(color: Colors.red,width: 1.2,))
+                    ),
                   ),
-                  onPressed: onPay, child: Text('Pay $amount',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),))
+                ),
+                SizedBox(height: 15,),
+                SizedBox(
+                  width: Get.width * 0.75,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text('Add description as needed',style: TextStyle(fontSize: 14,color: Colors.white60,fontWeight: FontWeight.w400),),
+                    ],
+                  ),
+                ),
 
-            ],
+                Spacer(),
+                // we can specify price unit later
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        minimumSize: Size(Get.width * 0.8, 40)
+                    ),
+                    onPressed: onPay, child: Text('Pay $amount ${currencyUnit}',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),))
+
+              ],
+            ),
           ),
         );
       },);
@@ -172,8 +179,8 @@ class ScreenBookingDetails extends StatelessWidget {
       vehicle.vehicleImageInterior,
       ...vehicle.imagesUrl
     ];
-    var percentageValue = booking.price / 100 * 15;
-    var totalRent = percentageValue + booking.price;
+    var percentageValue = (booking.price * adminPercentage!) / 100;
+    var totalRent = calculateAmountForUser(booking.price);
     return SafeArea(
         child: Scaffold(
           body: FutureBuilder<DocumentSnapshot>(
@@ -504,7 +511,7 @@ class ScreenBookingDetails extends StatelessWidget {
                                 "Subtotal", "${currencyUnit}${booking.price}"),
                             BookingSummary(
                                 "Service Fee",
-                                "${currencyUnit}${percentageValue}"),
+                                "${currencyUnit}${percentageValue.toStringAsFixed(1)}"),
                             Divider(
                               indent: 1,
                               endIndent: 1,
@@ -524,7 +531,7 @@ class ScreenBookingDetails extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  "${currencyUnit}${totalRent}",
+                                  "${currencyUnit}${totalRent.toStringAsFixed(1)}",
                                   style: TextStyle(
                                       color: AppColors.appPrimaryColor,
                                       fontSize: 16.sp,
@@ -548,12 +555,14 @@ class ScreenBookingDetails extends StatelessWidget {
                                     title: "Pay Now",
                                     isLoading: loading.value,
                                     onPressed: () async {
+
                                       loading.value = true;
-                                      print('---booking ${booking.toMap()}');
                                       if(booking.paymentStatus == 'Mepaisa'){
+
+
                                         await showMepaisaPaymentBottomSheet(totalRent.round().toString(),() async {
                                           await makePaymentWithMpaisa().then((value) async {
-                                            if(value == 200){
+                                            if(value.statusCode == 200){
                                               await bookingsRef.doc(booking.bookingId).update(
                                                   {
                                                     "bookingStatus": "In progress"
@@ -600,9 +609,16 @@ class ScreenBookingDetails extends StatelessWidget {
 
                                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Payment Successfully Send")));
 
+                                            }else{
+                                              loading.value = false;
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                  SnackBar(content: Text('${value.responseDescription}')));
                                             }
                                           });
                                         });
+
+
                                       }else if( booking.paymentStatus == 'CreditCard'){
 
 

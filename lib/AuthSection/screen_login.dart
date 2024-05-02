@@ -5,6 +5,7 @@ import 'package:careno/widgets/custom_button.dart';
 import 'package:careno/constant/helpers.dart';
 
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -147,7 +148,8 @@ class ScreenLogin extends StatelessWidget {
                     // ).marginSymmetric(vertical: 4.h),
                   Center(
                       child: CustomButton(
-                          title: "Send Code", onPressed: () {
+                          title: "Send Code", onPressed: () async {
+                            // await FirebaseAuth.instance.signOut();
                         controller.sendVerificationCode();
                       })).marginOnly(top: 50.h, bottom: 30.h),
                     Row(
