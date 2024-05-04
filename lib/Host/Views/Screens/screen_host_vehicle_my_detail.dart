@@ -207,6 +207,7 @@ class ScreenHostVehicleMyDetail extends StatelessWidget {
                                         width: 193.w,
                                         title: "Yes, Delete",
                                         onPressed: () async{
+
                                           await deleteDirectory("Host/addVehicle/${addHostVehicle.hostId}/${addHostVehicle.vehicleId}").then((value) async {
                                             await addVehicleRef.doc(addHostVehicle.vehicleId).delete();
                                             Get.back();
@@ -229,6 +230,34 @@ class ScreenHostVehicleMyDetail extends StatelessWidget {
       ),
     );
   }
+
+ Future<void> deleteFolder(String path) async {
+   try {
+     // Get a reference to the folder
+     Reference folderRef = FirebaseStorage.instance.ref().child(path);
+
+     // List all items (files and subdirectories) in the folder
+     ListResult result = await folderRef.listAll();
+
+     // Delete each item (file or subdirectory) recursively
+     for (Reference itemRef in result.items) {
+       if (itemRef.fullPath.endsWith('/')) {
+         // If the item is a subdirectory (ends with '/'), delete it recursively
+         await deleteFolder(itemRef.fullPath);
+       } else {
+         // If the item is a file, delete it
+         await itemRef.delete();
+       }
+     }
+
+     // After deleting all items, delete the folder itself
+     await folderRef.delete();
+
+     print('Folder $path and its contents deleted successfully.');
+   } catch (e) {
+     print('Error deleting folder $path: $e');
+   }
+ }
 
   Future<void> deleteDirectory(String path) async {
    try {

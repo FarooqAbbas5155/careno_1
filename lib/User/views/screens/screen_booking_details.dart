@@ -576,34 +576,37 @@ class ScreenBookingDetails extends StatelessWidget {
                                                       .user
                                                       .value;
                                               log(user!.notificationToken);
-                                              await FCM.sendMessageSingle(
-                                                "Payment Paid",
-                                                "${user!
-                                                    .name} has Send you Payment for Booking",
-                                                host.notificationToken,
-                                                {},
-                                              );
+                                              if (user!.notification == true) {
+                                                await FCM.sendMessageSingle(
+                                                  "Payment Paid",
+                                                  "${user!
+                                                      .name} has Send you Payment for Booking",
+                                                  host.notificationToken,
+                                                  {},
+                                                );
 
-                                              var notification = NotificationModel(
-                                                id: FirebaseUtils.newId
-                                                    .toString(),
-                                                title:
-                                                "${user
-                                                    .name} has Send you Payment for Booking",
-                                                read: false,
-                                                data: {
-                                                  "bookingId": booking.bookingId,
-                                                  "vehicleId": vehicle.vehicleId
-                                                },
-                                                timestamp: FirebaseUtils.newId,
-                                                senderId: FirebaseUtils.myId,
-                                                receiverId: vehicle.hostId,
-                                                type: 'Booking Payment',
-                                                subtitle: '',
-                                              );
-                                              await notificationRef
-                                                  .doc(notification.id)
-                                                  .set(notification.toMap());
+                                                var notification = NotificationModel(
+                                                  id: FirebaseUtils.newId
+                                                      .toString(),
+                                                  title:
+                                                  "${user
+                                                      .name} has Send you Payment for Booking",
+                                                  read: false,
+                                                  data: {
+                                                    "bookingId": booking.bookingId,
+                                                    "vehicleId": vehicle.vehicleId
+                                                  },
+                                                  timestamp: FirebaseUtils.newId,
+                                                  senderId: FirebaseUtils.myId,
+                                                  receiverId: vehicle.hostId,
+                                                  type: 'Booking Payment',
+                                                  subtitle: '',
+                                                );
+                                                await notificationRef
+                                                    .doc(notification.id)
+                                                    .set(notification.toMap());
+
+                                              }
                                               loading.value = false;
                                               Get.back();
 
@@ -640,34 +643,37 @@ class ScreenBookingDetails extends StatelessWidget {
                                                       .user
                                                       .value;
                                               log(user!.notificationToken);
-                                              await FCM.sendMessageSingle(
-                                                "Payment Paid",
-                                                "${user!
-                                                    .name} has Send you Payment for Booking",
-                                                host.notificationToken,
-                                                {},
-                                              );
+                                              if (user!.notification == true) {
+                                                await FCM.sendMessageSingle(
+                                                  "Payment Paid",
+                                                  "${user!
+                                                      .name} has Send you Payment for Booking",
+                                                  host.notificationToken,
+                                                  {},
+                                                );
 
-                                              var notification = NotificationModel(
-                                                id: FirebaseUtils.newId
-                                                    .toString(),
-                                                title:
-                                                "${user
-                                                    .name} has Send you Payment for Booking",
-                                                read: false,
-                                                data: {
-                                                  "bookingId": booking.bookingId,
-                                                  "vehicleId": vehicle.vehicleId
-                                                },
-                                                timestamp: FirebaseUtils.newId,
-                                                senderId: FirebaseUtils.myId,
-                                                receiverId: vehicle.hostId,
-                                                type: 'Booking Payment',
-                                                subtitle: '',
-                                              );
-                                              await notificationRef
-                                                  .doc(notification.id)
-                                                  .set(notification.toMap());
+                                                var notification = NotificationModel(
+                                                  id: FirebaseUtils.newId
+                                                      .toString(),
+                                                  title:
+                                                  "${user
+                                                      .name} has Send you Payment for Booking",
+                                                  read: false,
+                                                  data: {
+                                                    "bookingId": booking.bookingId,
+                                                    "vehicleId": vehicle.vehicleId
+                                                  },
+                                                  timestamp: FirebaseUtils.newId,
+                                                  senderId: FirebaseUtils.myId,
+                                                  receiverId: vehicle.hostId,
+                                                  type: 'Booking Payment',
+                                                  subtitle: '',
+                                                );
+                                                await notificationRef
+                                                    .doc(notification.id)
+                                                    .set(notification.toMap());
+
+                                              }
                                               loading.value = false;
                                               Get.back();
 

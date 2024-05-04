@@ -217,79 +217,9 @@ class LayoutHostProfile extends StatelessWidget {
                       trailing: CustomSvg(name: "arrow-forward",),
                     ),
                     ListTile(
-                      onTap: () {
-                        Get.defaultDialog(
-                            title: '',
-                            content: GestureDetector(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: Align(
-                                alignment: Alignment.topRight,
-                                child: Container(
-                                    padding: EdgeInsets.all(12.sp),
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 12.sp),
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFFF0F0F0),
-                                        shape: BoxShape.circle
-                                    ),
-                                    child: Icon(
-                                      Icons.clear, color: Colors.black,)),
-                              ),
-                            ),
-                            actions: [
-                              Column(
-                                children: [
-                                  Container(
-                                    height: 55.h,
-                                    width: 55.w,
-                                    padding: EdgeInsets.all(12.sp),
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFFF0F0F0),
-                                        borderRadius: BorderRadius.circular(
-                                            20.r)),
-                                    child: CustomSvg(
-                                      name: "logout2",
-                                      color: primaryColor,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10.sp,
-                                  ),
-                                  Text(
-                                    "Logout",
-                                    style: TextStyle(color: Colors.black,
-                                      fontSize: 22.sp,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: "UrbanistBold",),
-                                  ),
-                                  SizedBox(
-                                    height: 13.sp,
-                                  ),
-                                  SizedBox(
-                                    height: 36.h,
-                                    width: 230.w,
-                                    child: Text(
-                                      textAlign: TextAlign.center,
-                                      "Are you sure you want to Logout Account?",
-                                      style: TextStyle(color: Colors.black,
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: "UrbanistBold",),
-                                    ),
-                                  ),
-                                  CustomButton(
-                                      width: 193.w,
-                                      title: "Yes, logout",
-                                      onPressed: () {
-                                        FirebaseAuth.instance.signOut();
-                                        controller.clearControllers();
-                                        Get.offAll(ScreenLogin());
-                                      }).marginSymmetric(vertical: 20.h)
-                                ],
-                              )
-                            ]);
+                      onTap: ()async {
+                        // await   deleteDirectory("Careno/Users/ProfileImages/feDaYRVnOxcgCFAN4i2Yq41G1Wt1");
+                     await   deleteIdentityProofImages(uid);
                       },
                       leading: Container(
                         height: 36.h,
@@ -300,14 +230,107 @@ class LayoutHostProfile extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.r)
                         ),
                         child: CustomSvg(
-                          name: "logout",
+                          name: "block",
                         ),
 
                       ),
-                      title: Text("Logout", style: TextStyle(
+                      title: Text("Delete Vproo ", style: TextStyle(
                           fontWeight: FontWeight.w700, fontSize: 15.sp
                       ),),
+                      trailing: CustomSvg(name: "arrow-forward",),
                     ),
+                    // ListTile(
+                    //   onTap: () {
+                    //     Get.defaultDialog(
+                    //         title: '',
+                    //         content: GestureDetector(
+                    //           onTap: () {
+                    //             Get.back();
+                    //           },
+                    //           child: Align(
+                    //             alignment: Alignment.topRight,
+                    //             child: Container(
+                    //                 padding: EdgeInsets.all(12.sp),
+                    //                 margin: EdgeInsets.symmetric(
+                    //                     horizontal: 12.sp),
+                    //                 decoration: BoxDecoration(
+                    //                     color: Color(0xFFF0F0F0),
+                    //                     shape: BoxShape.circle
+                    //                 ),
+                    //                 child: Icon(
+                    //                   Icons.clear, color: Colors.black,)),
+                    //           ),
+                    //         ),
+                    //         actions: [
+                    //           Column(
+                    //             children: [
+                    //               Container(
+                    //                 height: 55.h,
+                    //                 width: 55.w,
+                    //                 padding: EdgeInsets.all(12.sp),
+                    //                 decoration: BoxDecoration(
+                    //                     color: Color(0xFFF0F0F0),
+                    //                     borderRadius: BorderRadius.circular(
+                    //                         20.r)),
+                    //                 child: CustomSvg(
+                    //                   name: "logout2",
+                    //                   color: primaryColor,
+                    //                 ),
+                    //               ),
+                    //               SizedBox(
+                    //                 height: 10.sp,
+                    //               ),
+                    //               Text(
+                    //                 "Logout",
+                    //                 style: TextStyle(color: Colors.black,
+                    //                   fontSize: 22.sp,
+                    //                   fontWeight: FontWeight.w700,
+                    //                   fontFamily: "UrbanistBold",),
+                    //               ),
+                    //               SizedBox(
+                    //                 height: 13.sp,
+                    //               ),
+                    //               SizedBox(
+                    //                 height: 36.h,
+                    //                 width: 230.w,
+                    //                 child: Text(
+                    //                   textAlign: TextAlign.center,
+                    //                   "Are you sure you want to Logout Account?",
+                    //                   style: TextStyle(color: Colors.black,
+                    //                     fontSize: 15.sp,
+                    //                     fontWeight: FontWeight.w600,
+                    //                     fontFamily: "UrbanistBold",),
+                    //                 ),
+                    //               ),
+                    //               CustomButton(
+                    //                   width: 193.w,
+                    //                   title: "Yes, logout",
+                    //                   onPressed: () {
+                    //                     FirebaseAuth.instance.signOut();
+                    //                     controller.clearControllers();
+                    //                     Get.offAll(ScreenLogin());
+                    //                   }).marginSymmetric(vertical: 20.h)
+                    //             ],
+                    //           )
+                    //         ]);
+                    //   },
+                    //   leading: Container(
+                    //     height: 36.h,
+                    //     width: 36.w,
+                    //     padding: EdgeInsets.all(5),
+                    //     decoration: BoxDecoration(
+                    //         color: Color(0xFFF0F0F0),
+                    //         borderRadius: BorderRadius.circular(8.r)
+                    //     ),
+                    //     child: CustomSvg(
+                    //       name: "logout",
+                    //     ),
+                    //
+                    //   ),
+                    //   title: Text("Logout", style: TextStyle(
+                    //       fontWeight: FontWeight.w700, fontSize: 15.sp
+                    //   ),),
+                    // ),
                   ],
                 ),
               ),

@@ -332,32 +332,35 @@ RxBool loading=false.obs;
                         // await usersRef.doc(host!.uid).update({"currentBalance": host.currentBalance+booking.price});
 
                     await updateHostWallet(senderName: user.name, paymentMethod: booking.paymentStatus, vehicleName: vehicle.vehicleModel, newAmount: booking.price, hostId: booking.hostId);
+                    if (host!.notification  == true)   {
 
 
-                    await FCM.sendMessageSingle(
-                      "Your Booking Completed",
-                      "${host!.name} has marked booking completed",
-                      user.notificationToken,
-                      {},
-                    );
+                      await FCM.sendMessageSingle(
+                        "Your Booking Completed",
+                        "${host!.name} has marked booking completed",
+                        user.notificationToken,
+                        {},
+                      );
 
-                    var notification = NotificationModel(
-                      id: FirebaseUtils.newId.toString(),
-                      title: "${host.name} has marked booking completed",
-                      read: false,
-                      data: {
-                        "bookingId": booking.bookingId,
-                        "vehicleId": vehicle.vehicleId
-                      },
-                      timestamp: FirebaseUtils.newId,
-                      senderId: FirebaseUtils.myId,
-                      receiverId: user.uid,
-                      type: 'Booking Request',
-                      subtitle: '',
-                    );
-                    await notificationRef
-                        .doc(notification.id)
-                        .set(notification.toMap());
+                      var notification = NotificationModel(
+                        id: FirebaseUtils.newId.toString(),
+                        title: "${host.name} has marked booking completed",
+                        read: false,
+                        data: {
+                          "bookingId": booking.bookingId,
+                          "vehicleId": vehicle.vehicleId
+                        },
+                        timestamp: FirebaseUtils.newId,
+                        senderId: FirebaseUtils.myId,
+                        receiverId: user.uid,
+                        type: 'Booking Request',
+                        subtitle: '',
+                      );
+                      await notificationRef
+                          .doc(notification.id)
+                          .set(notification.toMap());
+
+                    }
                     loading.value=false;
 
                     Get.back();
@@ -404,33 +407,32 @@ RxBool loading=false.obs;
                       .find<ControllerHostHome>()
                       .user
                       .value;
-                  await bookingsRef
-                      .doc(booking.bookingId)
-                      .update({"bookingStatus": "Rejected"}).then((value) async {
-                    await FCM.sendMessageSingle(
-                      "Your Booking Request Rejected",
-                      "${host!.name} has Rejected your booking request",
-                      user.notificationToken,
-                      {},
-                    );
+                  await bookingsRef.doc(booking.bookingId).update({"bookingStatus": "Rejected"}).then((value) async {
+                    if (host!.notification == true) {
+                      await FCM.sendMessageSingle(
+                        "Your Booking Request Rejected",
+                        "${host!.name} has Rejected your booking request",
+                        user.notificationToken,
+                        {},
+                      );
 
-                    var notification = NotificationModel(
-                      id: FirebaseUtils.newId.toString(),
-                      title: "${host.name} has Rejected your booking request",
-                      read: false,
-                      data: {
-                        "bookingId": booking.bookingId,
-                        "vehicleId": vehicle.vehicleId
-                      },
-                      timestamp: FirebaseUtils.newId,
-                      senderId: FirebaseUtils.myId,
-                      receiverId: user.uid,
-                      type: 'Booking Request',
-                      subtitle: '',
-                    );
-                    await notificationRef
-                        .doc(notification.id)
-                        .set(notification.toMap());
+                      var notification = NotificationModel(
+                        id: FirebaseUtils.newId.toString(),
+                        title: "${host.name} has Rejected your booking request",
+                        read: false,
+                        data: {
+                          "bookingId": booking.bookingId,
+                          "vehicleId": vehicle.vehicleId
+                        },
+                        timestamp: FirebaseUtils.newId,
+                        senderId: FirebaseUtils.myId,
+                        receiverId: user.uid,
+                        type: 'Booking Request',
+                        subtitle: '',
+                      );
+                      await notificationRef.doc(notification.id).set(notification.toMap());
+
+                    }
                     loading.value=false;
                     Get.back();
                   });
@@ -457,30 +459,32 @@ RxBool loading=false.obs;
                   log(host.toString());
                   await bookingsRef.doc(booking.bookingId).update(
                       {"bookingStatus": "Payment Pending"}).then((value) async {
-                    await FCM.sendMessageSingle(
-                      "Your Booking Request Accepted",
-                      "${host!.name} has sent you a request for Booking Payment Request",
-                      user.notificationToken,
-                      {},
-                    );
+                        if (host!.notification == true) {
+                          await FCM.sendMessageSingle(
+                            "Your Booking Request Accepted",
+                            "${host!.name} has sent you a request for Booking Payment Request",
+                            user.notificationToken,
+                            {},
+                          );
 
-                    var notification = NotificationModel(
-                      id: FirebaseUtils.newId.toString(),
-                      title: "${host.name} has sent you a request for Booking Payment Request",
-                      read: false,
-                      data: {
-                        "bookingId": booking.bookingId,
-                        "vehicleId": vehicle.vehicleId
-                      },
-                      timestamp: FirebaseUtils.newId,
-                      senderId: FirebaseUtils.myId,
-                      receiverId: user.uid,
-                      type: 'Booking Request',
-                      subtitle: '',
-                    );
-                    await notificationRef
-                        .doc(notification.id)
-                        .set(notification.toMap());
+                          var notification = NotificationModel(
+                            id: FirebaseUtils.newId.toString(),
+                            title: "${host.name} has sent you a request for Booking Payment Request",
+                            read: false,
+                            data: {
+                              "bookingId": booking.bookingId,
+                              "vehicleId": vehicle.vehicleId
+                            },
+                            timestamp: FirebaseUtils.newId,
+                            senderId: FirebaseUtils.myId,
+                            receiverId: user.uid,
+                            type: 'Booking Request',
+                            subtitle: '',
+                          );
+                          await notificationRef
+                              .doc(notification.id)
+                              .set(notification.toMap());
+                        }
                     loading.value=false;
 
                     Get.back();

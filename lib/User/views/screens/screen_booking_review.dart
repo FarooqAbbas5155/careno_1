@@ -392,35 +392,38 @@ class ScreenBookingReview extends StatelessWidget {
         .doc(id.toString())
         .set(booking.toMap())
         .then((value) async {
-      await FCM.sendMessageSingle(
-        "New Booking Request",
-        "${user!.name} has sent you a request for Booking",
-        host.notificationToken,
-        {},
-      );
+          if (user.notification == true) {
+            await FCM.sendMessageSingle(
+              "New Booking Request",
+              "${user!.name} has sent you a request for Booking",
+              host.notificationToken,
+              {},
+            );
 
-      var notification = NotificationModel(
-        id: FirebaseUtils.newId.toString(),
-        title: "${user.name} sent you a request for booking",
-        read: false,
-        data: {
-          "bookingId": booking.bookingId,
-          "vehicleId": addHostVehicle.vehicleId
-        },
-        timestamp: FirebaseUtils.newId,
-        senderId: FirebaseUtils.myId,
-        receiverId: addHostVehicle.hostId,
-        type: 'Booking Request',
-        subtitle: '',
-      );
-      await notificationRef
-          .doc(notification.id)
-          .set(notification.toMap())
-          .catchError((error) {
-        loading.value = false;
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(error.toString())));
-      });
+            var notification = NotificationModel(
+              id: FirebaseUtils.newId.toString(),
+              title: "${user.name} sent you a request for booking",
+              read: false,
+              data: {
+                "bookingId": booking.bookingId,
+                "vehicleId": addHostVehicle.vehicleId
+              },
+              timestamp: FirebaseUtils.newId,
+              senderId: FirebaseUtils.myId,
+              receiverId: addHostVehicle.hostId,
+              type: 'Booking Request',
+              subtitle: '',
+            );
+            await notificationRef
+                .doc(notification.id)
+                .set(notification.toMap()).catchError((error) {
+              loading.value = false;
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(error.toString())));
+            });
+
+          }
+
       loading.value = false;
 
       showBottomSheet(context);

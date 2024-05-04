@@ -317,6 +317,48 @@ Future<void> deleteVehicleImages(String userId) async {
     print('Failed to delete vehicle images: $error');
   }
 }
+Future<void> deleteIdentityProofImages(String userId) async {
+  try {
+    ListResult listResult = await FirebaseStorage.instance
+        .ref('User/Host${uid}/')
+        .listAll();
+
+    for (var item in listResult.items) {
+      await item.delete();
+    }
+    print('Identity deleted successfully');
+  } catch (error) {
+    print('Failed to delete vehicle images: $error');
+  }
+}
+Future<void> deleteFolder(String path) async {
+  try {
+    // Get a reference to the folder
+    Reference folderRef = FirebaseStorage.instance.ref().child(path);
+
+    // List all items (files and subdirectories) in the folder
+    ListResult result = await folderRef.listAll();
+
+    // Delete each item (file or subdirectory) recursively
+    for (Reference itemRef in result.items) {
+      if (itemRef.fullPath.endsWith('/')) {
+        // If the item is a subdirectory (ends with '/'), delete it recursively
+        await deleteFolder(itemRef.fullPath);
+      } else {
+        // If the item is a file, delete it
+        await itemRef.delete();
+      }
+    }
+
+    // After deleting all items, delete the folder itself
+    await folderRef.delete();
+
+    print('Folder $path and its contents deleted successfully.');
+  } catch (e) {
+    print('Error deleting folder $path: $e');
+  }
+}
+
 Future<void> deleteUserAccount(BuildContext context, String userId) async {
   hasInProgressBookings(uid);
   DocumentSnapshot userSnapshot = await usersRef.doc(userId).get();
@@ -361,7 +403,7 @@ Future<void> deleteUserAccount(BuildContext context, String userId) async {
         querySnapshot.docs.forEach((doc) async {
           await doc.reference.delete();
         });
-        await deleteVehicleImages(userId);
+        await deleteFolder("Host/addVehicle/$userId/addVehicle/");
       });
 
       // Delete host bookings
@@ -376,7 +418,9 @@ Future<void> deleteUserAccount(BuildContext context, String userId) async {
 
       // Delete user account
       await usersRef.doc(userId).delete();
-      await deleteUserProfileImage(userId);
+      await deleteIdentityProofImages(userId);
+      await deleteFolder('User/Host${uid}/');
+      await deleteDirectory("Careno/Users/ProfileImages/$userId");
       homeController.clearController();
       homeControllers.clearControllers();
       Get.offAll(ScreenLogin());
@@ -385,6 +429,36 @@ Future<void> deleteUserAccount(BuildContext context, String userId) async {
     print('User does not exist!');
   }
 }
+
+
+Future<void> deleteDirectory(String path) async {
+  try {
+    // Get reference to the directory
+    Reference directoryRef = FirebaseStorage.instance.ref().child(path);
+
+    // List all items (files and subdirectories) in the directory
+    ListResult result = await directoryRef.listAll();
+
+    // Delete each item (file or subdirectory) recursively
+    for (Reference ref in result.items) {
+      if (ref.fullPath.endsWith('/')) {
+        // If the item is a subdirectory (ends with '/'), delete it recursively
+        await deleteDirectory(ref.fullPath);
+      } else {
+        // If the item is a file, delete it
+        await ref.delete();
+      }
+    }
+
+    // After deleting all items, delete the directory itself
+    await directoryRef.delete();
+
+    print('Directory $path and its contents deleted successfully.');
+  } catch (e) {
+    print('Error deleting directory $path: $e');
+  }
+}
+
 String getCurrency() {
   var format = NumberFormat.simpleCurrency(locale: Platform.localeName);
   dev.log(format.currencySymbol);

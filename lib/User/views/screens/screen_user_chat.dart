@@ -488,12 +488,15 @@ void clearChat() {
                       print(error.toString());
                     }).then((value) {
                       animateToLastMessage(300);
+                      if (widget.user!.notification == true) {
 
-                      FCM.sendMessageSingle(
-                          "New Message",
-                          message.text,
-                          widget.user!.notificationToken.toString(),
-                          {});
+                        FCM.sendMessageSingle(
+                            "New Message",
+                            message.text,
+                            widget.user!.notificationToken.toString(),
+                            {});
+
+                      }
                     }).then((value) {
                       print(value);
                     });

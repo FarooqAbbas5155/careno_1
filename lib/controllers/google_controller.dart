@@ -48,7 +48,7 @@ class GoogleController extends GetxController {
         lng: 0.0,
         uid: uid,
         gender: "",
-        notification: false,
+        notification: true,
         notificationToken: '',
         timeStamp: DateTime.now().millisecondsSinceEpoch,
         isVerified: false,
