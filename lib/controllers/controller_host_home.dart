@@ -358,4 +358,25 @@ class ControllerHostHome extends GetxController {
 
     return completedBookingsCount;
   }
+  void clearControllers(){
+    ratingSubscription?.cancel();
+    requestedBookingsSubscription?.cancel();
+    startedBookingsSubscription?.cancel();
+    BookingsSubscription?.cancel();
+    completedBookingsSubscription?.cancel();
+    bookingsSubscription?.cancel();
+
+    // Reset all observable variables
+    selectHostIndex.value = 0;
+    user.value = null;
+    ratedVehicleList.clear();
+    requestedBookingsList.clear();
+    startedBookingsList.clear();
+    completedBookingsList.clear();
+    bookingsList.clear();
+    isFetchingStartedBookings.value = true;
+    isFetchingRequestedBookings.value = true;
+    isFetchingBookings.value = true;
+    isFetchingCompletedBookings.value = true;
+  }
 }

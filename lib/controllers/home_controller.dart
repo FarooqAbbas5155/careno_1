@@ -140,7 +140,7 @@ super.onInit();
 
   Stream<List<Booking>> FetchRequestedBookingLists() {
     return bookingsRef
-        .where("bookingStatus", whereIn: ["Request Pending", "Payment Pending"])
+        .where("bookingStatus",isEqualTo: "Request Pending")
         .where("userId", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
         .snapshots()
         .map((querySnapshot) {
@@ -338,6 +338,31 @@ super.onInit();
     return completedBookingsCount;
   }
 
+  void clearController() {
+    // Clear all lists and variables
+    selectHostIndex.value = 0;
+    changeHomeLayout.value = 0;
+    selectIndex.value = 0;
+    allCategory.clear();
+    addhostvehicle.clear();
+    popularVehicle.clear();
+    ratedVehicleList.clear();
+    requestedBookingsList.clear();
+    startedBookingsList.clear();
+    completedBookingsList.clear();
+    bookingsList.clear();
+    isFetchingStartedBookings.value = true;
+    isFetchingRequestedBookings.value = true;
+    isFetchingBookings.value = true;
+    isFetchingCompletedBookings.value = true;
+
+    // Cancel all subscriptions
+    ratingSubscription?.cancel();
+    bookingsSubscription?.cancel();
+    requestedBookingsSubscription?.cancel();
+    startedBookingsSubscription?.cancel();
+    completedBookingsSubscription?.cancel();
+  }
 
 }
 

@@ -74,25 +74,25 @@ class ControllerHostAddVechicle extends GetxController {
       String userId = FirebaseAuth.instance.currentUser!.uid;
 
       String vehiclePathUrl = await FirebaseUtils.uploadImage(vehiclePath.value,
-          "User/Host/${userId}/addVehicle/${id}/vehiclePath");
+          "Host/addVehicle/${userId}/${id}/vehiclePath");
       String vehicleRightSidePathsUrl = await FirebaseUtils.uploadImage(
           vehicleRightSidePaths.value,
-          "User/Host/${userId}/addVehicle/${id}/vehicleRightSidePaths");
+          "Host/addVehicle/${userId}/${id}/vehicleRightSidePaths");
       String vehicleInteriorPathsUrl = await FirebaseUtils.uploadImage(
           vehicleInteriorPaths.value,
-          "User/Host/${userId}/addVehicle/${id}/vehicleInteriorPaths");
+          "Host/addVehicle/${userId}/${id}/vehicleInteriorPaths");
       String vehicleNumberPlatePathUrl = await FirebaseUtils.uploadImage(
           vehicleNumberPlatePath.value,
-          "Host/addVehicle/${userId}/${id}/image/vehicleNumberPlatePath");
+          "Host/addVehicle/${userId}/${id}/vehicleNumberPlatePath");
       String vehicleRegistrationProofPathUrl = await FirebaseUtils.uploadImage(
           vehicleRegistrationProofPath.value,
-          "Host/addVehicle/${userId}/${id}/image/vehicleRegistrationProofPath");
+          "Host/addVehicle/${userId}/${id}/vehicleRegistrationProofPath");
       String vehicleRearPathsUrl = await FirebaseUtils.uploadImage(
           vehicleRearPaths.value,
-          "Host/addVehicle/${userId}/${id}/image/vehicleRearPaths");
+          "Host/addVehicle/${userId}/${id}/vehicleRearPaths");
       imagesUrl.value = await FirebaseUtils.uploadMultipleImage(
         vehicleMore.value,
-        "Host/addVehicle/${userId}/${id}/image/imageList",
+        "Host/addVehicle/${userId}/${id}/imageList",
         extension: "png",
       );
 

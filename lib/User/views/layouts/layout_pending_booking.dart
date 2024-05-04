@@ -10,6 +10,7 @@ class LayoutPendingBooking extends StatelessWidget {
  HomeController controllerHome=Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
+    print("object ${controllerHome.requestedBookingsList.value.length}");
     return Obx(() {
       return controllerHome.requestedBookingsList.value.isNotEmpty?ListView.builder(
         itemCount: controllerHome.requestedBookingsList.value.length,

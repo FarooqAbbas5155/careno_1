@@ -207,7 +207,7 @@ class ScreenHostVehicleMyDetail extends StatelessWidget {
                                         width: 193.w,
                                         title: "Yes, Delete",
                                         onPressed: () async{
-                                          await deleteDirectory("Host/addVehicle/${addHostVehicle.hostId}/${addHostVehicle.vehicleId}/image").then((value) async {
+                                          await deleteDirectory("Host/addVehicle/${addHostVehicle.hostId}/${addHostVehicle.vehicleId}").then((value) async {
                                             await addVehicleRef.doc(addHostVehicle.vehicleId).delete();
                                             Get.back();
 

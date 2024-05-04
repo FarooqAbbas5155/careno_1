@@ -1,5 +1,7 @@
 import 'package:careno/TermsConditionSection/screen_privacy_policy.dart';
 import 'package:careno/TermsConditionSection/screen_terms_and_conditions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,7 +13,7 @@ import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_svg.dart';
 
 class ScreenHostSetting extends StatelessWidget {
-
+HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     RxBool isNotification = true.obs;
@@ -21,6 +23,7 @@ class ScreenHostSetting extends StatelessWidget {
       // Use the null aware operator ?? to provide a default value if notification is null
       isNotification.value = controller.user.value!.notification ?? false;
     }
+
     return SafeArea(child: Scaffold(
       appBar: AppBar(
         title: Text("Setting"),
@@ -157,7 +160,8 @@ class ScreenHostSetting extends StatelessWidget {
                           color: Color(0xffeb141b),
                             width: 193.w,
                             title: "Yes, Delete",
-                            onPressed: () {
+                            onPressed: ()async {
+                            await  deleteUserAccount(context,uid);
                               Get.back();
                             }).marginSymmetric(vertical: 20.h)
                       ],
@@ -188,4 +192,6 @@ class ScreenHostSetting extends StatelessWidget {
       ),
     ));
   }
+
+
 }

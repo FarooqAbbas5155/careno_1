@@ -6,12 +6,14 @@ import 'package:careno/AuthSection/screen_welcome.dart';
 import 'package:careno/Host/Views/Screens/screen_host_home_page.dart';
 import 'package:careno/User/views/screens/screen_user_home.dart';
 import 'package:careno/constant/my_helper_by_callofcoding.dart';
+import 'package:careno/controllers/home_controller.dart';
 import 'package:careno/models/add_host_vehicle.dart';
 import 'package:careno/models/categories.dart';
 import 'package:careno/models/rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +26,7 @@ import '../AuthSection/screen_complete_profile.dart';
 import '../Host/Views/Screens/screen_host_account_pending.dart';
 import '../Host/Views/Screens/screen_host_add_ident_identity_proof.dart';
 import '../Host/Views/Screens/screen_host_add_vehicle.dart';
+import '../controllers/controller_host_home.dart';
 import '../interfaces/like_listener.dart';
 import '../models/user.dart';
 
@@ -280,7 +283,108 @@ void showPopupImage(BuildContext context,String image) {
     },
   );
 }
+bool value = false;
+Future<bool> hasInProgressBookings(String userId) async {
+  QuerySnapshot querySnapshot = await bookingsRef
+      .where('userId', isEqualTo: userId)
+      .where('bookingStatus', isEqualTo: 'In progress')
+      .get();
 
+  return querySnapshot.docs.isNotEmpty;
+}
+
+Future<void> deleteUserProfileImage(String userId) async {
+  try {
+    await FirebaseStorage.instance.ref('Careno/Users/ProfileImages/$userId').delete();
+    await FirebaseStorage.instance.ref('User/${uid}').delete();
+    print('User profile image deleted successfully');
+  } catch (error) {
+    print('Failed to delete user profile image: $error');
+  }
+}
+
+Future<void> deleteVehicleImages(String userId) async {
+  try {
+    ListResult listResult = await FirebaseStorage.instance
+        .ref('Host/addVehicle/$userId/addVehicle/')
+        .listAll();
+
+    for (var item in listResult.items) {
+      await item.delete();
+    }
+    print('All vehicle images deleted successfully');
+  } catch (error) {
+    print('Failed to delete vehicle images: $error');
+  }
+}
+Future<void> deleteUserAccount(BuildContext context, String userId) async {
+  hasInProgressBookings(uid);
+  DocumentSnapshot userSnapshot = await usersRef.doc(userId).get();
+
+  if (userSnapshot.exists) {
+    // Delete user bookings
+
+    // Check for in-progress bookings
+    bool hasInProgress = await hasInProgressBookings(userId);
+    print("Booking Progerss $hasInProgress");
+    if (hasInProgress) {
+      Get.back();
+    await  showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Cannot Delete Account'),
+            content: Text(
+                'You cannot delete your account until your booking is complete.',style: TextStyle(fontSize: 20.sp,fontFamily: "Nunito",fontWeight: FontWeight.w700),),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+    else {
+      // Delete user vehicles
+      await bookingsRef.where('userId', isEqualTo: userId).get().then((
+          querySnapshot) {
+        querySnapshot.docs.forEach((doc) async {
+          await doc.reference.delete();
+        });
+      });
+      await addVehicleRef.where('userId', isEqualTo: userId).get().then((
+          querySnapshot) async {
+        querySnapshot.docs.forEach((doc) async {
+          await doc.reference.delete();
+        });
+        await deleteVehicleImages(userId);
+      });
+
+      // Delete host bookings
+      await bookingsRef.where('hostId', isEqualTo: userId).get().then((
+          querySnapshot) {
+        querySnapshot.docs.forEach((doc) async {
+          await doc.reference.delete();
+        });
+      });
+      HomeController homeController = HomeController();
+      ControllerHostHome homeControllers = ControllerHostHome();
+
+      // Delete user account
+      await usersRef.doc(userId).delete();
+      await deleteUserProfileImage(userId);
+      homeController.clearController();
+      homeControllers.clearControllers();
+      Get.offAll(ScreenLogin());
+    }
+  } else {
+    print('User does not exist!');
+  }
+}
 String getCurrency() {
   var format = NumberFormat.simpleCurrency(locale: Platform.localeName);
   dev.log(format.currencySymbol);

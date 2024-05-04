@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:careno/Host/Views/Screens/screen_host_account_pending.dart';
+import 'package:careno/Host/Views/Screens/screen_host_home_page.dart';
 import 'package:careno/constant/colors.dart';
+import 'package:careno/constant/helpers.dart';
 import 'package:careno/controllers/controller_host_add_identity_proof.dart';
 import 'package:careno/widgets/custom_button.dart';
 import 'package:careno/widgets/custom_svg.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,6 +62,11 @@ class ScreenHostAddIdentIdentityProof extends StatelessWidget {
                       var response = await controllerHostAddIdentityProof
                           .updateIdentityProof();
                       if (response=="success") {
+                        DocumentSnapshot userSnapshot = await usersRef.doc(uid).get();
+                        var verification = userSnapshot["isVerified"] ?? false;
+                        if(verification == true){
+                          Get.offAll(ScreenHostHomePage());
+                        }
                         Get.offAll(()=>ScreenHostAccountPending());
                       }
                       else{

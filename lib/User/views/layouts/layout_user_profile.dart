@@ -257,6 +257,7 @@ class LayoutUserProfile extends StatelessWidget {
                                       title: "Yes, logout",
                                       onPressed: () {
                                         FirebaseAuth.instance.signOut().then((value) {
+                                          controller.clearController();
                                           Get.offAll(ScreenLogin());
                                         });
                                       }).marginSymmetric(vertical: 20.h)
