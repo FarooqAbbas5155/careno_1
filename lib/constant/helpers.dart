@@ -403,7 +403,7 @@ Future<void> deleteUserAccount(BuildContext context, String userId) async {
         querySnapshot.docs.forEach((doc) async {
           await doc.reference.delete();
         });
-        await deleteFolder("Host/addVehicle/$userId/addVehicle/");
+        await deleteFolder("Host/addVehicle/$userId/");
       });
 
       // Delete host bookings
