@@ -23,6 +23,7 @@ import 'dart:developer' as dev;
 
 
 import '../AuthSection/screen_complete_profile.dart';
+import '../AuthSection/screen_user_block_screen.dart';
 import '../Host/Views/Screens/screen_host_account_pending.dart';
 import '../Host/Views/Screens/screen_host_add_ident_identity_proof.dart';
 import '../Host/Views/Screens/screen_host_add_vehicle.dart';
@@ -170,9 +171,13 @@ Future<Widget> getHomeScreen() async {
     var user = await getUser(uid);
     if (user.userType == "") {
       screen = ScreenWelcome();
-    } else if (user.userType == "host") {
+    }
+    else if (user.userType == "host") {
       if (user.email == "") {
         screen=ScreenCompleteProfile();
+      }
+      else if (user.isBlocked == true){
+        screen = ScreenUserBlockScreen();
       }
       else if (user.hostIdentity == null) {
         screen = ScreenHostAddIdentIdentityProof();
@@ -187,11 +192,15 @@ Future<Widget> getHomeScreen() async {
       else {
         screen = ScreenHostHomePage();
       }
-    } else {
+    }
+    else {
       if (user.email == "") {
         screen=ScreenCompleteProfile();
       }
       else{
+        if (user.isBlocked == true){
+    screen = ScreenUserBlockScreen();
+  }
         screen = ScreenUserHome();
       }
     }
