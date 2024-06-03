@@ -195,7 +195,6 @@ class _MyAppState extends State<MyApp> {
             theme: ThemeData(
 
               fontFamily: 'Urbanist',
-              primarySwatch: AppColors.appPrimaryColor,
               radioTheme: RadioThemeData(
                 fillColor: MaterialStateColor.resolveWith((states) {
                   if (states.contains(MaterialState.selected)) {
@@ -234,8 +233,7 @@ class _MyAppState extends State<MyApp> {
 
               dividerColor: Colors.transparent,
               scaffoldBackgroundColor: Colors.white,
-              backgroundColor: Colors.white,
-              useMaterial3: false,
+              useMaterial3: false, colorScheme: ColorScheme.fromSwatch(primarySwatch: AppColors.appPrimaryColor).copyWith(background: Colors.white),
 
 
             ),

@@ -78,7 +78,7 @@ dependencies:
   flutter_google_places: any
   google_maps_webservice: ^0.0.20-nullsafety.5
   google_api_headers: ^1.6.0
-  flutter_stripe: ^5.1.0
+  flutter_stripe: 9.6.0
   mpesa_flutter_plugin: ^1.6.1
   dart_mpesa: ^2.0.3
 #  multi_image_picker: ^4.8.01
