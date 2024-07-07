@@ -14,6 +14,7 @@ class ControllerFilter extends GetxController{
   Rx<String> selectCategory = ''.obs;
   Rx<String> carBrand = 'Toyota'.obs;
   Rx<String> carModel = ''.obs;
+  Rx<String> currency = '\$'.obs;
   Rx<String> carTransmission = 'Automatic'.obs;
   Rx<String> carFuelType = 'Gasoline'.obs;
   Rx<String> carSeatsCapacity = '04'.obs;

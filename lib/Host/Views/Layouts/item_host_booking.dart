@@ -162,7 +162,7 @@ class ItemHostBooking extends StatelessWidget {
                                           ],
                                         ),
                                         Text(
-                                          "${currencyUnit}${booking.price}",
+                                          "${vehicle.currency}${booking.price}",
                                           style: TextStyle(
                                               fontSize: 20.sp,
                                               fontWeight: FontWeight.w700,

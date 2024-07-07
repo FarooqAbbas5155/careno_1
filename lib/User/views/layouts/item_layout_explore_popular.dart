@@ -152,7 +152,7 @@ class _ItemLayoutExplorePopularState extends State<ItemLayoutExplorePopular> imp
                 ),
                 RichText(
                   text: TextSpan(
-                    text: '${currencyUnit}${widget.addHostVehicle!.vehiclePerDayRent}',
+                    text: '${widget.addHostVehicle!.currency}${widget.addHostVehicle!.vehiclePerDayRent}',
                     style: TextStyle(color: primaryColor,fontFamily: "Urbanist",fontWeight: FontWeight.w700,fontSize: 14.sp),
                     children: <TextSpan>[
                       TextSpan(

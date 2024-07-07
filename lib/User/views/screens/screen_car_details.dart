@@ -204,7 +204,7 @@ class ScreenCarDetails extends StatelessWidget {
                           bottom: 20.h,
                           child: RichText(
                             text: TextSpan(
-                              text: '${currencyUnit}${addHostVehicle!.vehiclePerDayRent}',
+                              text: '${addHostVehicle!.currency}${addHostVehicle!.vehiclePerDayRent}',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: "UrbanistBold",

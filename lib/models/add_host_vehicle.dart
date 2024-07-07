@@ -1,14 +1,14 @@
 class AddHostVehicle{
-  String hostId,vehicleId,address;
-  String vehicleImageComplete,vehicleImageNumberPlate,vehicleImageRightSide,vehicleImageRear,vehicleImageInterior;
-  String vehicleModel,vehicleCategory,vehicleYear,vehicleSeats,vehicleTransmission,vehicleFuelType,vehicleNumberPlate,vehicleColor,vehicleLicenseExpiryDate,vehiclePerDayRent,vehiclePerHourRent,vehicleRegistrationImage;
-  String status,vehicleDescription;
+  String hostId, vehicleId, address;
+  String vehicleImageComplete, vehicleImageNumberPlate, vehicleImageRightSide, vehicleImageRear, vehicleImageInterior;
+  String vehicleModel, vehicleCategory, vehicleYear, vehicleSeats, vehicleTransmission, vehicleFuelType, vehicleNumberPlate, vehicleColor, vehicleLicenseExpiryDate, vehiclePerDayRent, vehiclePerHourRent, vehicleRegistrationImage;
+  String status, vehicleDescription, currency;
   double rating;
-  double latitude,longitude;
+  double latitude, longitude;
   List<String> imagesUrl;
   bool isVerified;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
   AddHostVehicle({
     required this.hostId,
     required this.vehicleId,
@@ -32,6 +32,7 @@ class AddHostVehicle{
     required this.vehicleRegistrationImage,
     required this.status,
     required this.vehicleDescription,
+    required this.currency,
     required this.rating,
     required this.latitude,
     required this.longitude,
@@ -42,35 +43,36 @@ class AddHostVehicle{
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AddHostVehicle &&
-          runtimeType == other.runtimeType &&
-          hostId == other.hostId &&
-          vehicleId == other.vehicleId &&
-          address == other.address &&
-          vehicleImageComplete == other.vehicleImageComplete &&
-          vehicleImageNumberPlate == other.vehicleImageNumberPlate &&
-          vehicleImageRightSide == other.vehicleImageRightSide &&
-          vehicleImageRear == other.vehicleImageRear &&
-          vehicleImageInterior == other.vehicleImageInterior &&
-          vehicleModel == other.vehicleModel &&
-          vehicleCategory == other.vehicleCategory &&
-          vehicleYear == other.vehicleYear &&
-          vehicleSeats == other.vehicleSeats &&
-          vehicleTransmission == other.vehicleTransmission &&
-          vehicleFuelType == other.vehicleFuelType &&
-          vehicleNumberPlate == other.vehicleNumberPlate &&
-          vehicleColor == other.vehicleColor &&
-          vehicleLicenseExpiryDate == other.vehicleLicenseExpiryDate &&
-          vehiclePerDayRent == other.vehiclePerDayRent &&
-          vehiclePerHourRent == other.vehiclePerHourRent &&
-          vehicleRegistrationImage == other.vehicleRegistrationImage &&
-          status == other.status &&
-          vehicleDescription == other.vehicleDescription &&
-          rating == other.rating &&
-          latitude == other.latitude &&
-          longitude == other.longitude &&
-          imagesUrl == other.imagesUrl &&
-          isVerified == other.isVerified);
+          (other is AddHostVehicle &&
+              runtimeType == other.runtimeType &&
+              hostId == other.hostId &&
+              vehicleId == other.vehicleId &&
+              address == other.address &&
+              vehicleImageComplete == other.vehicleImageComplete &&
+              vehicleImageNumberPlate == other.vehicleImageNumberPlate &&
+              vehicleImageRightSide == other.vehicleImageRightSide &&
+              vehicleImageRear == other.vehicleImageRear &&
+              vehicleImageInterior == other.vehicleImageInterior &&
+              vehicleModel == other.vehicleModel &&
+              vehicleCategory == other.vehicleCategory &&
+              vehicleYear == other.vehicleYear &&
+              vehicleSeats == other.vehicleSeats &&
+              vehicleTransmission == other.vehicleTransmission &&
+              vehicleFuelType == other.vehicleFuelType &&
+              vehicleNumberPlate == other.vehicleNumberPlate &&
+              vehicleColor == other.vehicleColor &&
+              vehicleLicenseExpiryDate == other.vehicleLicenseExpiryDate &&
+              vehiclePerDayRent == other.vehiclePerDayRent &&
+              vehiclePerHourRent == other.vehiclePerHourRent &&
+              vehicleRegistrationImage == other.vehicleRegistrationImage &&
+              status == other.status &&
+              vehicleDescription == other.vehicleDescription &&
+              currency == other.currency &&
+              rating == other.rating &&
+              latitude == other.latitude &&
+              longitude == other.longitude &&
+              imagesUrl == other.imagesUrl &&
+              isVerified == other.isVerified);
 
   @override
   int get hashCode =>
@@ -96,6 +98,7 @@ class AddHostVehicle{
       vehicleRegistrationImage.hashCode ^
       status.hashCode ^
       vehicleDescription.hashCode ^
+      currency.hashCode ^
       rating.hashCode ^
       latitude.hashCode ^
       longitude.hashCode ^
@@ -127,6 +130,7 @@ class AddHostVehicle{
         ' vehicleRegistrationImage: $vehicleRegistrationImage,' +
         ' status: $status,' +
         ' vehicleDescription: $vehicleDescription,' +
+        ' currency: $currency,' +
         ' rating: $rating,' +
         ' latitude: $latitude,' +
         ' longitude: $longitude,' +
@@ -158,6 +162,7 @@ class AddHostVehicle{
     String? vehicleRegistrationImage,
     String? status,
     String? vehicleDescription,
+    String? currency,
     double? rating,
     double? latitude,
     double? longitude,
@@ -169,10 +174,8 @@ class AddHostVehicle{
       vehicleId: vehicleId ?? this.vehicleId,
       address: address ?? this.address,
       vehicleImageComplete: vehicleImageComplete ?? this.vehicleImageComplete,
-      vehicleImageNumberPlate:
-          vehicleImageNumberPlate ?? this.vehicleImageNumberPlate,
-      vehicleImageRightSide:
-          vehicleImageRightSide ?? this.vehicleImageRightSide,
+      vehicleImageNumberPlate: vehicleImageNumberPlate ?? this.vehicleImageNumberPlate,
+      vehicleImageRightSide: vehicleImageRightSide ?? this.vehicleImageRightSide,
       vehicleImageRear: vehicleImageRear ?? this.vehicleImageRear,
       vehicleImageInterior: vehicleImageInterior ?? this.vehicleImageInterior,
       vehicleModel: vehicleModel ?? this.vehicleModel,
@@ -183,14 +186,13 @@ class AddHostVehicle{
       vehicleFuelType: vehicleFuelType ?? this.vehicleFuelType,
       vehicleNumberPlate: vehicleNumberPlate ?? this.vehicleNumberPlate,
       vehicleColor: vehicleColor ?? this.vehicleColor,
-      vehicleLicenseExpiryDate:
-          vehicleLicenseExpiryDate ?? this.vehicleLicenseExpiryDate,
+      vehicleLicenseExpiryDate: vehicleLicenseExpiryDate ?? this.vehicleLicenseExpiryDate,
       vehiclePerDayRent: vehiclePerDayRent ?? this.vehiclePerDayRent,
       vehiclePerHourRent: vehiclePerHourRent ?? this.vehiclePerHourRent,
-      vehicleRegistrationImage:
-          vehicleRegistrationImage ?? this.vehicleRegistrationImage,
+      vehicleRegistrationImage: vehicleRegistrationImage ?? this.vehicleRegistrationImage,
       status: status ?? this.status,
       vehicleDescription: vehicleDescription ?? this.vehicleDescription,
+      currency: currency ?? this.currency,
       rating: rating ?? this.rating,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
@@ -223,6 +225,7 @@ class AddHostVehicle{
       'vehicleRegistrationImage': this.vehicleRegistrationImage,
       'status': this.status,
       'vehicleDescription': this.vehicleDescription,
+      'currency': this.currency,
       'rating': this.rating,
       'latitude': this.latitude,
       'longitude': this.longitude,
@@ -255,10 +258,11 @@ class AddHostVehicle{
       vehicleRegistrationImage: map['vehicleRegistrationImage'] as String,
       status: map['status'] as String,
       vehicleDescription: map['vehicleDescription'] as String,
+      currency: map['currency'] as String,
       rating: map['rating'] as double,
       latitude: map['latitude'] as double,
       longitude: map['longitude'] as double,
-      imagesUrl: (map['imagesUrl']as List<dynamic>).cast<String>(),
+      imagesUrl: (map['imagesUrl'] as List<dynamic>).cast<String>(),
       isVerified: map['isVerified'] as bool,
     );
   }

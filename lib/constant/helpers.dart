@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:careno/AuthSection/screen_login.dart';
@@ -21,7 +20,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'dart:developer' as dev;
 
-
 import '../AuthSection/screen_complete_profile.dart';
 import '../AuthSection/screen_user_block_screen.dart';
 import '../Host/Views/Screens/screen_host_account_pending.dart';
@@ -32,7 +30,8 @@ import '../interfaces/like_listener.dart';
 import '../models/user.dart';
 
 var uid = auth.FirebaseAuth.instance.currentUser!.uid;
-String image_url = "https://phito.be/wp-content/uploads/2020/01/placeholder.png";
+String image_url =
+    "https://phito.be/wp-content/uploads/2020/01/placeholder.png";
 String googleApiKey = 'AIzaSyCjxRhtdw74nJ9YdYaGjvY5IZUEA5Ux0JA';
 
 var dbInstance = FirebaseFirestore.instance;
@@ -45,19 +44,19 @@ CollectionReference bookingsRef = dbInstance.collection("bookings");
 CollectionReference reviewRef = dbInstance.collection("reviews");
 CollectionReference notificationRef = dbInstance.collection("notifications");
 CollectionReference bannerRef = dbInstance.collection("promotionalBanner");
- CollectionReference termsAndConditionsCollection = dbInstance.collection('termsAndConditions');
- CollectionReference policyCollection = dbInstance.collection('policy');
+CollectionReference termsAndConditionsCollection =
+    dbInstance.collection('termsAndConditions');
+CollectionReference policyCollection = dbInstance.collection('policy');
 
 Map<String, User> _allUsersMap = {};
 Map<String, Category> _allCategoryMap = {};
 Map<String, Rating> allVehicleRatings = {};
 Map<String, Rating> ratingsMap = {};
-var currencyUnit = "\$";
+// var currencyUnit = "\$";
 
 double? adminPercentage;
+
 ///Pushed
-
-
 
 Future<bool> hostProofAlreadyExists(String uid) async {
   final doc = await hostIdentityProofRef.doc(uid).get();
@@ -146,6 +145,7 @@ User defaultUser = User(
 
 Color primaryColor = Color(0xff4C0AE1);
 bool hasAddedVehicle = false;
+
 Future<bool> userHasAddedVehicle() async {
   // Query the database to find all vehicles
   var querySnapshot = await addVehicleRef.where('hostId', isEqualTo: uid).get();
@@ -158,8 +158,6 @@ Future<bool> userHasAddedVehicle() async {
   return hasAddedVehicle;
 }
 
-
-
 Future<Widget> getHomeScreen() async {
   Widget screen = ScreenLogin();
   if (auth.FirebaseAuth.instance.currentUser != null) {
@@ -171,37 +169,32 @@ Future<Widget> getHomeScreen() async {
     var user = await getUser(uid);
     if (user.userType == "") {
       screen = ScreenWelcome();
-    }
-    else if (user.userType == "host") {
-      if (user.email == "") {
-        screen=ScreenCompleteProfile();
-      }
-      else if (user.isBlocked == true){
-        screen = ScreenUserBlockScreen();
-      }
-      else if (user.hostIdentity == null) {
-        screen = ScreenHostAddIdentIdentityProof();
-      } else if (user.isVerified == false){
-      screen = ScreenHostAccountPending();
-      }
-      else if(user.isVerified == true){
-        if (hasAddedVehicle == false) {
-          screen = ScreenHostAddVehicle();
+    } else if (user.email.isEmpty) {
+      screen = ScreenCompleteProfile();
+    } else if (user.isBlocked == true) {
+      screen = ScreenUserBlockScreen();
+    } else {
+      if (user.userType == "host") {
+        if (user.hostIdentity == null)
+        {
+          screen = ScreenHostAddIdentIdentityProof();
         }
-      }
-      else {
-        screen = ScreenHostHomePage();
-      }
-    }
-    else {
-      if (user.email == "") {
-        screen=ScreenCompleteProfile();
-      }
-      else{
-        if (user.isBlocked == true){
-    screen = ScreenUserBlockScreen();
-  }
-        screen = ScreenUserHome();
+        else if (user.isVerified == true) {
+          if (hasAddedVehicle == false) {
+            screen = ScreenHostAddVehicle();
+          }
+          else {
+            screen = ScreenHostHomePage();
+          }
+        } else {
+          screen = ScreenHostAccountPending();
+        }
+      } else {
+        if (user.email == "") {
+          screen = ScreenCompleteProfile();
+        } else {
+          screen = ScreenUserHome();
+        }
       }
     }
   }
@@ -230,11 +223,14 @@ Future<FilePickerResult?> PickFile(List<String> type) async {
   return result;
 }
 
-String dateFormat(DateTime dateTime,) {
+String dateFormat(
+  DateTime dateTime,
+) {
   // Use DateFormat class from intl package to format the date
   DateFormat dateFormat = DateFormat.yMMMMd('en_US');
   return dateFormat.format(dateTime);
 }
+
 String formatDateRange(DateTime startDate, DateTime endDate) {
   // Format the start date and end date
   DateFormat dateFormat = DateFormat.yMMMMd('en_US');
@@ -245,17 +241,20 @@ String formatDateRange(DateTime startDate, DateTime endDate) {
   // Construct the formatted date range string
   return '$formattedStartDate - $formattedEndDate';
 }
-String formatTime(int hour24) {
 
+String formatTime(int hour24) {
   // Create a DateTime object with the given hour in 24-hour format
-  DateTime dateTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, hour24);
+  DateTime dateTime = DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day, hour24);
 
   // Format the DateTime object using DateFormat to convert to 12-hour format with AM/PM
-  DateFormat dateFormat = DateFormat('h:mm a'); // 'h:mm a' for 12-hour format with AM/PM
+  DateFormat dateFormat =
+      DateFormat('h:mm a'); // 'h:mm a' for 12-hour format with AM/PM
   String formattedTime = dateFormat.format(dateTime);
 
   return formattedTime;
 }
+
 void checkForLikes(String vehical_id, LikeListener listener) {
   List<String> likes = [];
   addVehicleRef.doc(vehical_id).collection("likes").snapshots().listen((event) {
@@ -264,11 +263,9 @@ void checkForLikes(String vehical_id, LikeListener listener) {
         .toList();
     listener.onLikesUpdated(likes);
   });
-
-
-
 }
-void showPopupImage(BuildContext context,String image) {
+
+void showPopupImage(BuildContext context, String image) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -292,7 +289,9 @@ void showPopupImage(BuildContext context,String image) {
     },
   );
 }
+
 bool value = false;
+
 Future<bool> hasInProgressBookings(String userId) async {
   QuerySnapshot querySnapshot = await bookingsRef
       .where('userId', isEqualTo: userId)
@@ -304,7 +303,9 @@ Future<bool> hasInProgressBookings(String userId) async {
 
 Future<void> deleteUserProfileImage(String userId) async {
   try {
-    await FirebaseStorage.instance.ref('Careno/Users/ProfileImages/$userId').delete();
+    await FirebaseStorage.instance
+        .ref('Careno/Users/ProfileImages/$userId')
+        .delete();
     await FirebaseStorage.instance.ref('User/${uid}').delete();
     print('User profile image deleted successfully');
   } catch (error) {
@@ -326,11 +327,11 @@ Future<void> deleteVehicleImages(String userId) async {
     print('Failed to delete vehicle images: $error');
   }
 }
+
 Future<void> deleteIdentityProofImages(String userId) async {
   try {
-    ListResult listResult = await FirebaseStorage.instance
-        .ref('User/Host${uid}/')
-        .listAll();
+    ListResult listResult =
+        await FirebaseStorage.instance.ref('User/Host${uid}/').listAll();
 
     for (var item in listResult.items) {
       await item.delete();
@@ -340,6 +341,7 @@ Future<void> deleteIdentityProofImages(String userId) async {
     print('Failed to delete vehicle images: $error');
   }
 }
+
 Future<void> deleteFolder(String path) async {
   try {
     // Get a reference to the folder
@@ -380,13 +382,18 @@ Future<void> deleteUserAccount(BuildContext context, String userId) async {
     print("Booking Progerss $hasInProgress");
     if (hasInProgress) {
       Get.back();
-    await  showDialog(
+      await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Cannot Delete Account'),
             content: Text(
-                'You cannot delete your account until your booking is complete.',style: TextStyle(fontSize: 20.sp,fontFamily: "Nunito",fontWeight: FontWeight.w700),),
+              'You cannot delete your account until your booking is complete.',
+              style: TextStyle(
+                  fontSize: 20.sp,
+                  fontFamily: "Nunito",
+                  fontWeight: FontWeight.w700),
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -398,17 +405,20 @@ Future<void> deleteUserAccount(BuildContext context, String userId) async {
           );
         },
       );
-    }
-    else {
+    } else {
       // Delete user vehicles
-      await bookingsRef.where('userId', isEqualTo: userId).get().then((
-          querySnapshot) {
+      await bookingsRef
+          .where('userId', isEqualTo: userId)
+          .get()
+          .then((querySnapshot) {
         querySnapshot.docs.forEach((doc) async {
           await doc.reference.delete();
         });
       });
-      await addVehicleRef.where('userId', isEqualTo: userId).get().then((
-          querySnapshot) async {
+      await addVehicleRef
+          .where('userId', isEqualTo: userId)
+          .get()
+          .then((querySnapshot) async {
         querySnapshot.docs.forEach((doc) async {
           await doc.reference.delete();
         });
@@ -416,8 +426,10 @@ Future<void> deleteUserAccount(BuildContext context, String userId) async {
       });
 
       // Delete host bookings
-      await bookingsRef.where('hostId', isEqualTo: userId).get().then((
-          querySnapshot) {
+      await bookingsRef
+          .where('hostId', isEqualTo: userId)
+          .get()
+          .then((querySnapshot) {
         querySnapshot.docs.forEach((doc) async {
           await doc.reference.delete();
         });
@@ -438,7 +450,6 @@ Future<void> deleteUserAccount(BuildContext context, String userId) async {
     print('User does not exist!');
   }
 }
-
 
 Future<void> deleteDirectory(String path) async {
   try {

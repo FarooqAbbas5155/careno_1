@@ -442,53 +442,53 @@ class _ScreenSearchFilterState extends State<ScreenSearchFilter> {
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w600),
               ),
-              SizedBox(
-                width: Get.width,
-                child: Obx(() {
-                  final startLabel = "${currencyUnit}${controller.selectedRange
-                      .value.start.toStringAsFixed(0)}";
-                  final endLabel = "${currencyUnit}${controller.selectedRange
-                      .value.end.toStringAsFixed(0)}";
-
-                  return SliderTheme(
-                    data: SliderThemeData(
-                      thumbShape: SliderComponentShape.noOverlay,
-                      overlayColor: AppColors.appPrimaryColor,
-                      valueIndicatorColor: Color(0xFF2F97D1),
-                      // Change the overlay color
-                      valueIndicatorTextStyle: TextStyle(
-                        color: Colors.white, // Change the label text color here
-                      ),
-                    ),
-                    child: RangeSlider(
-                      min: 0,
-                      max: 100,
-                      divisions: 99,
-                      labels: RangeLabels(startLabel, endLabel),
-                      values: controller.selectedRange.value,
-                      onChanged: (value) {
-                        controller.selectedRange.value = value;
-                        log(controller.selectedRange.value.start.toString());
-                        log(controller.selectedRange.value.end.toString());
-                      },
-                    ),
-                  );
-                }),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text("${currencyUnit}0", style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600
-                  ),),
-                  Text("${currencyUnit}100", style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600
-                  ),),
-                ],
-              ).marginSymmetric(horizontal: 25.w
-              ),
+              // SizedBox(
+              //   width: Get.width,
+              //   child: Obx(() {
+              //     final startLabel = "${currencyUnit}${controller.selectedRange
+              //         .value.start.toStringAsFixed(0)}";
+              //     final endLabel = "${currencyUnit}${controller.selectedRange
+              //         .value.end.toStringAsFixed(0)}";
+              //
+              //     return SliderTheme(
+              //       data: SliderThemeData(
+              //         thumbShape: SliderComponentShape.noOverlay,
+              //         overlayColor: AppColors.appPrimaryColor,
+              //         valueIndicatorColor: Color(0xFF2F97D1),
+              //         // Change the overlay color
+              //         valueIndicatorTextStyle: TextStyle(
+              //           color: Colors.white, // Change the label text color here
+              //         ),
+              //       ),
+              //       child: RangeSlider(
+              //         min: 0,
+              //         max: 100,
+              //         divisions: 99,
+              //         labels: RangeLabels(startLabel, endLabel),
+              //         values: controller.selectedRange.value,
+              //         onChanged: (value) {
+              //           controller.selectedRange.value = value;
+              //           log(controller.selectedRange.value.start.toString());
+              //           log(controller.selectedRange.value.end.toString());
+              //         },
+              //       ),
+              //     );
+              //   }),
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: <Widget>[
+              //     Text("${currencyUnit}0", style: TextStyle(
+              //         fontSize: 12.sp,
+              //         fontWeight: FontWeight.w600
+              //     ),),
+              //     Text("${currencyUnit}100", style: TextStyle(
+              //         fontSize: 12.sp,
+              //         fontWeight: FontWeight.w600
+              //     ),),
+              //   ],
+              // ).marginSymmetric(horizontal: 25.w
+              // ),
               Image.asset("assets/images/Line 39.png").marginSymmetric(
                   horizontal: 40.w, vertical: 20.h),
               Center(
@@ -580,10 +580,10 @@ class _ScreenSearchFilterState extends State<ScreenSearchFilter> {
 
                           // Add more filter conditions as needed...
 
-                          return matchesCategory &&
-                              matchesModelYear &&
-                              matchesTransmission &&
-                              matchesFuelType &&
+                          return matchesCategory ||
+                              matchesModelYear ||
+                              matchesTransmission ||
+                              matchesFuelType ||
                               matchesSeatsCapacity ;
                               // matchesLocation &&
                               // matchesBrand;

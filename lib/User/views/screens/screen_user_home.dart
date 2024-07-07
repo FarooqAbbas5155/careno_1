@@ -85,19 +85,21 @@ class _ScreenUserHomeState extends State<ScreenUserHome> with WidgetsBindingObse
 
                   var uid = FirebaseAuth.instance.currentUser!.uid;
                   var user = await getUser(uid);
-                   if (user.hostIdentity == null) {
-                  Get.to(ScreenHostAddIdentIdentityProof());
-                  } else if (user.isVerified == false){
-                   Get.to(ScreenHostAccountPending());
-                  }
-                  else if(user.isVerified == true) {
+
+
                     await usersRef.doc(getUid()).update({
                       "userType": "host"
                     }).then((value) {
-                      Get.offAll(ScreenHostHomePage());
+                      if (user.hostIdentity == null) {
+                        Get.to(ScreenHostAddIdentIdentityProof());
+                      } else if (user.isVerified == false){
+                        Get.to(ScreenHostAccountPending());
+                      }
+                      else{
+                        Get.offAll(ScreenHostHomePage());
+                      }
 
                     });
-                  }
 
                 },
               ),

@@ -34,7 +34,7 @@ PaymentHistoryModel paymentHistory;
             ),
 
           ],)),
-            Text("${currencyUnit}${paymentHistory.paymentAmount}",style: TextStyle(fontSize: 18.sp,fontWeight: FontWeight.w700,color: AppColors.appPrimaryColor),)
+            Text("${paymentHistory.currency}${paymentHistory.paymentAmount}",style: TextStyle(fontSize: 18.sp,fontWeight: FontWeight.w700,color: AppColors.appPrimaryColor),)
            ],
         ).marginOnly(bottom: 6.h),
         Divider(color: Color(0xFFBBBBBB).withOpacity(.5),thickness: .5

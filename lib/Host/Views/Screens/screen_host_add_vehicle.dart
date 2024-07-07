@@ -191,18 +191,20 @@ class ScreenHostAddVehicle extends StatelessWidget {
                   hint: "Vehicle License Expiry Date",
                   keyboardType: TextInputType.name,
                 ).marginSymmetric(vertical: 8.h),
+                buildCurrencyContainer(controllerAddVehicle, context),
+
                 CustomTextField(
                   readOnly: controllerAddVehicle.showLoading.value,
 
                   controller: controllerAddVehicle.vehiclePerDayRent,
-                  hint: "Per Day Rent ${currencyUnit}",
+                  hint: "Per Day Rent ${controllerAddVehicle.currency.value}",
                   keyboardType: TextInputType.number,
                 ).marginSymmetric(vertical: 8.h),
                 CustomTextField(
                   readOnly: controllerAddVehicle.showLoading.value,
 
                   controller: controllerAddVehicle.vehiclePerHourRent,
-                  hint: "Per Hours Rent ${currencyUnit}",
+                  hint: "Per Hours Rent ${controllerAddVehicle.currency.value}",
                   keyboardType: TextInputType.number,
                 ).marginSymmetric(vertical: 8.h),
                 // buildVehicleNumberPlate(controllerAddVehicle),
@@ -545,8 +547,7 @@ class ScreenHostAddVehicle extends StatelessWidget {
     });
   }
 
-  Obx buildFuelContainer(ControllerHostAddVechicle controllerAddVehicle,
-      BuildContext context) {
+  Obx buildFuelContainer(ControllerHostAddVechicle controllerAddVehicle, BuildContext context) {
     return Obx(() {
       return CustomTextField(
         padding: EdgeInsets.only(left: 18.w, top: 18.h),
@@ -579,6 +580,44 @@ class ScreenHostAddVehicle extends StatelessWidget {
           onSelected: (String choice) {
             // Update selected gender when an option is chosen
             controllerAddVehicle.selectFuelType.value = choice;
+          },
+        ).marginOnly(top: 4.h),
+      );
+    });
+  }
+  Obx buildCurrencyContainer(ControllerHostAddVechicle controllerAddVehicle, BuildContext context) {
+    return Obx(() {
+      return CustomTextField(
+        padding: EdgeInsets.only(left: 18.w, top: 18.h),
+        readOnly: true,
+        hint: controllerAddVehicle.currency.value.isEmpty
+            ? "Select Currency"
+            : controllerAddVehicle.currency.value,
+        hintColor: controllerAddVehicle.currency.value.isEmpty
+            ? Color(0xff94979F)
+            : Colors.black,
+        suffix: PopupMenuButton(
+          icon: Icon(Icons.expand_more),
+          color: Theme
+              .of(context)
+              .primaryColor,
+          itemBuilder: (BuildContext context) {
+            return [
+              '\$',
+              'PKR',
+            ].map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Text(
+                  choice,
+                  style: TextStyle(color: Colors.white, fontFamily: "Urbanist"),
+                ),
+              );
+            }).toList();
+          },
+          onSelected: (String choice) {
+            // Update selected gender when an option is chosen
+            controllerAddVehicle.currency.value = choice;
           },
         ).marginOnly(top: 4.h),
       );

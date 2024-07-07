@@ -308,9 +308,9 @@ class ScreenBookingReview extends StatelessWidget {
                       ),
                     ),
                     BookingSummary("Subtotal",
-                        "${currencyUnit}${controller.price.value.toStringAsFixed(0)}"),
+                        "${addHostVehicle.currency}${controller.price.value.toStringAsFixed(0)}"),
                     BookingSummary(
-                        "Service Fee", "${currencyUnit}${((controller.price.value * adminPercentage!) / 100).toStringAsFixed(1)}"),
+                        "Service Fee", "${addHostVehicle.currency}${((controller.price.value * adminPercentage!) / 100).toStringAsFixed(1)}"),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -323,7 +323,7 @@ class ScreenBookingReview extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "${currencyUnit}${calculateAmountForUser(controller.price.value).toStringAsFixed(1)}",
+                          "${addHostVehicle.currency}${calculateAmountForUser(controller.price.value).toStringAsFixed(1)}",
                           style: TextStyle(
                               color: AppColors.appPrimaryColor,
                               fontSize: 16.sp,
@@ -335,7 +335,7 @@ class ScreenBookingReview extends StatelessWidget {
                     Center(child: Obx(() {
                       return CustomButton(
                           isLoading: loading.value,
-                          title: "Add Payment Method",
+                          title: "Send Request",
                           onPressed: () async {
                             await setBooking(context, user);
 

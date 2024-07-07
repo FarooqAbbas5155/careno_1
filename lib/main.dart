@@ -24,7 +24,7 @@ void main() async {
   Stripe.publishableKey = PaymentsController2.stripePublishableKey;
   colorConfig();
 
-  currencyUnit=getCurrency();
+  // currencyUnit=getCurrency();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

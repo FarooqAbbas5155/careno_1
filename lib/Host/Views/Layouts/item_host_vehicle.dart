@@ -88,7 +88,7 @@ String? categoryName;
                 ),
                 RichText(
                   text: TextSpan(
-                    text: '${currencyUnit}${addHostVehicle!.vehiclePerDayRent}',
+                    text: '${addHostVehicle!.currency}${addHostVehicle!.vehiclePerDayRent}',
                     style: TextStyle(color: primaryColor,fontFamily: "UrbanistBold",fontWeight: FontWeight.w800,fontSize: 16.sp),
                     children: <TextSpan>[
                       TextSpan(

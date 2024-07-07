@@ -22,6 +22,7 @@ class ControllerHostAddVechicle extends GetxController {
   TextEditingController vehiclePerHourRent = TextEditingController();
   TextEditingController vehicleDescription = TextEditingController();
   RxString search = "".obs;
+  RxString currency = "\$".obs;
   Rx<TextEditingController> searchController = TextEditingController().obs;
 
 
@@ -123,6 +124,7 @@ class ControllerHostAddVechicle extends GetxController {
         vehicleFuelType: selectFuelType.value,
         imagesUrl: imagesUrl.value,
         vehicleDescription: vehicleDescription.value.text.trim(), isVerified: false,
+        currency: currency.value,
       );
       await addVehicleRef
           .doc(id.toString())
@@ -255,7 +257,8 @@ class ControllerHostAddVechicle extends GetxController {
         rating: _addHostVehicle.rating,
         latitude: latitude.value,
         longitude: longitude.value,
-        imagesUrl: imagesUrl, isVerified: false);
+        imagesUrl: imagesUrl, isVerified: false,
+        currency: currency.value);
     log(addHostVehicle.toString());
     await addVehicleRef.doc(addHostVehicle.vehicleId).update(addHostVehicle.toMap());
     // await _updateCommonData(addHostVehicle);

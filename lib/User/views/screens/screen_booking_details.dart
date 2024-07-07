@@ -159,7 +159,7 @@ class ScreenBookingDetails extends StatelessWidget {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         minimumSize: Size(Get.width * 0.8, 40)
                     ),
-                    onPressed: onPay, child: Text('Pay $amount ${currencyUnit}',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),))
+                    onPressed: onPay, child: Text('Pay $amount ${vehicle.currency}',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),))
 
               ],
             ),
@@ -508,10 +508,10 @@ class ScreenBookingDetails extends StatelessWidget {
                               ),
                             ),
                             BookingSummary(
-                                "Subtotal", "${currencyUnit}${booking.price}"),
+                                "Subtotal", "${vehicle.currency}${booking.price}"),
                             BookingSummary(
                                 "Service Fee",
-                                "${currencyUnit}${percentageValue.toStringAsFixed(1)}"),
+                                "${vehicle.currency}${percentageValue.toStringAsFixed(1)}"),
                             Divider(
                               indent: 1,
                               endIndent: 1,
@@ -531,7 +531,7 @@ class ScreenBookingDetails extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  "${currencyUnit}${totalRent.toStringAsFixed(1)}",
+                                  "${vehicle.currency}${totalRent.toStringAsFixed(1)}",
                                   style: TextStyle(
                                       color: AppColors.appPrimaryColor,
                                       fontSize: 16.sp,
