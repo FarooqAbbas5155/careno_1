@@ -121,7 +121,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Container(
       // padding: EdgeInsets.only(top: 2.sp),
-      height: widget.height ?? 55.h,
+      // height: widget.height ?? 55.h,
       decoration: BoxDecoration(
           color: Color(0xffB0B0B0).withOpacity(.1),
           borderRadius: BorderRadius.circular(10),
@@ -184,6 +184,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 Color(0xff8A8D9F),
             filled: widget.fillColor != null,
             suffixIconConstraints: BoxConstraints(minWidth: 50.sp),
+            prefixIconConstraints: BoxConstraints(minWidth: 50.sp),
             suffixIcon: widget.suffix ??
                 (isPasswordField
                     ? IconButton(
@@ -223,7 +224,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     right: 15,
                     top: (widget.maxLines != null) ? 15 : 5,
                     bottom: (widget.maxLines != null) ? 15 : 5),
-            border: InputBorder.none
+            border:InputBorder.none
 
             // filled: true,
             // fillColor: Color(0xF0BBBBBB),

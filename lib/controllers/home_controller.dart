@@ -46,7 +46,7 @@ class HomeController extends GetxController {
   void onInit() {
 updateToken();
 UserStream();
-vehicleSnapshot = addVehicleRef.snapshots();
+vehicleSnapshot = addVehicleRef.where("hostId",isNotEqualTo: uid).snapshots();
 popularVehicleSnapshot = addVehicleRef.where("rating",isGreaterThanOrEqualTo: 4).snapshots();
 
 categoriesSnapshot = categoryRef.snapshots();

@@ -59,7 +59,7 @@ class ScreenLogin extends StatelessWidget {
                     Obx(() {
                       return CustomTextField(
                         controller: controller.phoneController.value,
-                        // padding: EdgeInsets.only(left: 10.w, top: 22.h),
+                        padding: EdgeInsets.only(top: 11.h),
                         hint: "Phone Number",
                         keyboardType: TextInputType.number,
                         hintColor: controller.country_code == null ? Color(
@@ -80,7 +80,7 @@ class ScreenLogin extends StatelessWidget {
                           showOnlyCountryWhenClosed: false,
                           // optional. aligns the flag and the Text left
                           alignLeft: false,
-                        ).marginOnly(top: 4.h),
+                        ),
                       );
                     }).marginSymmetric(vertical: 4.h),
                     // Text("Password", style: TextStyle(fontFamily: "UrbanistBold",

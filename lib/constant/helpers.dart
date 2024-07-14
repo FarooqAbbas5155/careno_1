@@ -108,7 +108,8 @@ Future<User> getUser(String id) async {
 
   if (user == null) {
     var doc = await usersRef.doc(id).get();
-    var data = doc.data();
+    var data = doc.id;
+    dev.log(data);
 
     if (data != null) {
       dev.log(data.toString());

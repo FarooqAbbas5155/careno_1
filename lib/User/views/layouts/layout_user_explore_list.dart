@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:careno/models/promotion_banner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -18,6 +19,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../models/add_host_vehicle.dart';
 import '../screens/full_image_view.dart';
 import '../screens/screen_filter.dart';
 import '../screens/screen_preview_category.dart';
@@ -30,6 +32,7 @@ HomeController controller = Get.put(HomeController());
 var des;
   @override
   Widget build(BuildContext context) {
+    controller.popularVehicle.where((p0) => p0.hostId == FirebaseAuth.instance.currentUser!.uid).toList();
     return Column(
       children: [
         Container(
