@@ -108,8 +108,16 @@ Future<User> getUser(String id) async {
 
   if (user == null) {
     var doc = await usersRef.doc(id).get();
-    user = User.fromMap(doc.data() as Map<String, dynamic>);
-    _allUsersMap[id] = user;
+    var data = doc.data();
+
+    if (data != null) {
+      dev.log(data.toString());
+      user = User.fromMap(data as Map<String, dynamic>);
+      _allUsersMap[id] = user;
+    } else {
+      // Handle the case where the user document does not exist or is null
+      throw Exception('User data is null for id: $id');
+    }
   }
 
   return user;
@@ -166,36 +174,45 @@ Future<Widget> getHomeScreen() async {
     print("hasAddedVehicle $hasAddedVehicle");
 
     var uid = auth.FirebaseAuth.instance.currentUser!.uid;
+    dev.log(uid);
     var user = await getUser(uid);
-    if (user.userType == "") {
-      screen = ScreenWelcome();
-    } else if (user.email.isEmpty) {
-      screen = ScreenCompleteProfile();
-    } else if (user.isBlocked == true) {
-      screen = ScreenUserBlockScreen();
-    } else {
-      if (user.userType == "host") {
-        if (user.hostIdentity == null)
-        {
-          screen = ScreenHostAddIdentIdentityProof();
-        }
-        else if (user.isVerified == true) {
-          if (hasAddedVehicle == false) {
-            screen = ScreenHostAddVehicle();
+    if(user != null){
+      if (user.userType == "") {
+        screen = ScreenWelcome();
+      }
+      else if (user.email.isEmpty) {
+        screen = ScreenCompleteProfile();
+      }
+      else if (user.isBlocked == true) {
+        screen = ScreenUserBlockScreen();
+      }
+      else {
+        if (user.userType == "host") {
+          if (user.hostIdentity == null)
+          {
+            screen = ScreenHostAddIdentIdentityProof();
           }
-          else {
-            screen = ScreenHostHomePage();
+          else if (user.isVerified == true) {
+            if (hasAddedVehicle == false) {
+              screen = ScreenHostAddVehicle();
+            }
+            else {
+              screen = ScreenHostHomePage();
+            }
+          } else {
+            screen = ScreenHostAccountPending();
           }
         } else {
-          screen = ScreenHostAccountPending();
-        }
-      } else {
-        if (user.email == "") {
-          screen = ScreenCompleteProfile();
-        } else {
-          screen = ScreenUserHome();
+          if (user.email == "") {
+            screen = ScreenCompleteProfile();
+          } else {
+            screen = ScreenUserHome();
+          }
         }
       }
+    }
+    else{
+      screen = ScreenWelcome();
     }
   }
 

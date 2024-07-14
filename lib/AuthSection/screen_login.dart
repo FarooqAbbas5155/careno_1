@@ -59,7 +59,7 @@ class ScreenLogin extends StatelessWidget {
                     Obx(() {
                       return CustomTextField(
                         controller: controller.phoneController.value,
-                        padding: EdgeInsets.only(left: 10.w, top: 22.h),
+                        // padding: EdgeInsets.only(left: 10.w, top: 22.h),
                         hint: "Phone Number",
                         keyboardType: TextInputType.number,
                         hintColor: controller.country_code == null ? Color(

@@ -604,7 +604,7 @@ class ScreenHostAddVehicle extends StatelessWidget {
           itemBuilder: (BuildContext context) {
             return [
               '\$',
-              'PKR',
+              'KSh',
             ].map((String choice) {
               return PopupMenuItem<String>(
                 value: choice,

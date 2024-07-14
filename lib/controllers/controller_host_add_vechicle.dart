@@ -22,7 +22,7 @@ class ControllerHostAddVechicle extends GetxController {
   TextEditingController vehiclePerHourRent = TextEditingController();
   TextEditingController vehicleDescription = TextEditingController();
   RxString search = "".obs;
-  RxString currency = "\$".obs;
+  RxString currency = "Select Currency".obs;
   Rx<TextEditingController> searchController = TextEditingController().obs;
 
 
