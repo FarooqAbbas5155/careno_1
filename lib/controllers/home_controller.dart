@@ -207,7 +207,6 @@ super.onInit();
 
         final fifteenMinutesBefore = endTime.subtract(Duration(minutes: 15));
         log(fifteenMinutesBefore.toString());
-
         if (now.isAfter(endTime)) {
           await updateBookingStatus(booking.bookingId, "Pending Approval");
           shownPopups.add(booking.bookingId);
