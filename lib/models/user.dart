@@ -80,7 +80,7 @@ class User {
       address: map['address'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
-      hostWallet: map['hostWallet'] != null && map['hostWallet'] is Map<String, dynamic>
+      hostWallet: map['hostWallet'] != null
           ? WalletModel.fromMap(map['hostWallet'] as Map<String, dynamic>)
           : null,
       profileDescription: map['profileDescription'] as String,
@@ -89,7 +89,7 @@ class User {
       status: map['status'] as String,
       dob: map['dob'] as int,
       timeStamp: map['timeStamp'] as int,
-      hostIdentity: map['hostIdentity'] != null && map['hostIdentity'] is Map<String, dynamic>
+      hostIdentity: map['hostIdentity'] != null
           ? HostIdentity.fromMap(map['hostIdentity'] as Map<String, dynamic>)
           : null,
       lat: map['lat'] as double,
