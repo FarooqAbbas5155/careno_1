@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:careno/AuthSection/screen_login.dart';
 import 'package:careno/Host/Views/Screens/screen_host_blocked_user.dart';
 import 'package:careno/Host/Views/Screens/screen_host_documents.dart';
 import 'package:careno/Host/Views/Screens/screen_host_edit_profile.dart';
 import 'package:careno/Host/Views/Screens/screen_host_setting.dart';
 import 'package:careno/Host/Views/Screens/screen_host_vehicle.dart';
+import 'package:careno/constant/firebase_utils.dart';
 import 'package:careno/constant/helpers.dart';
 import 'package:careno/controllers/controller_host_home.dart';
 import 'package:careno/controllers/home_controller.dart';
@@ -12,8 +15,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../constant/colors.dart';
+import '../../../controllers/booking_controller.dart';
+import '../../../controllers/controller_edit_profile.dart';
+import '../../../controllers/controller_filter.dart';
+import '../../../controllers/controller_update_profile.dart';
 import '../../../widgets/custom_button.dart';
 
 class LayoutHostProfile extends StatelessWidget {
@@ -234,7 +242,7 @@ class LayoutHostProfile extends StatelessWidget {
                         ),
 
                       ),
-                      title: Text("Delete Vproo ", style: TextStyle(
+                      title: Text("Delete My Account  ", style: TextStyle(
                           fontWeight: FontWeight.w700, fontSize: 15.sp
                       ),),
                       trailing: CustomSvg(name: "arrow-forward",),
@@ -306,9 +314,37 @@ class LayoutHostProfile extends StatelessWidget {
                                       width: 193.w,
                                       title: "Yes, logout",
                                       onPressed: () {
-                                        FirebaseAuth.instance.signOut();
-                                        controller.clearControllers();
-                                        Get.offAll(ScreenLogin());
+
+                                          GoogleSignIn().signOut().then((value) {
+                                            FirebaseAuth.instance.signOut().then((value) {
+                                              Get.offAll(ScreenLogin());
+
+                                              controller.dispose();
+                                              Get.find<ControllerFilter>().dispose();
+                                              Get.find<BookingController>().dispose();
+                                              Get.find<ControllerEditProfile>().dispose();
+                                              Get.find<ControllerUpdateProfile>().dispose();
+                                              Get.find<ControllerHostHome>().dispose();
+                                              log( FirebaseAuth.instance.currentUser!.uid);
+                                              log(FirebaseUtils.myId);
+
+                                            });
+
+                                        });
+                                          FirebaseAuth.instance.signOut().then((value) {
+                                            Get.offAll(ScreenLogin());
+
+
+                                            controller.dispose();
+                                            Get.find<ControllerFilter>().dispose();
+                                            Get.find<BookingController>().dispose();
+                                            Get.find<ControllerEditProfile>().dispose();
+                                            Get.find<ControllerUpdateProfile>().dispose();
+                                            Get.find<ControllerHostHome>().dispose();
+                                            log( FirebaseAuth.instance.currentUser!.uid);
+                                            log(FirebaseUtils.myId);
+
+                                          });
                                       }).marginSymmetric(vertical: 20.h)
                                 ],
                               )
