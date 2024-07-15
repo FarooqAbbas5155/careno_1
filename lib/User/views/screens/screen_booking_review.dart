@@ -24,6 +24,7 @@ class ScreenBookingReview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.paymentType.value =addHostVehicle.currency=="\$"?"CreditCard":"Mepaisa";
     // var percentageValue =
     //     controller.price.value / 100 * controller.percentage.value;
     // controller.TotalVehicleRent.value = percentageValue + controller.price.value;
@@ -98,7 +99,7 @@ class ScreenBookingReview extends StatelessWidget {
                       ),
                     ),
 
-                    Obx(() {
+                   if(addHostVehicle.currency=="\$") Obx(() {
                       return RadioListTile(
                           title: Row(
                             children: [
@@ -125,7 +126,7 @@ class ScreenBookingReview extends StatelessWidget {
                             controller.paymentType.value = value!;
                           });
                     }),
-                    Obx(() {
+                    if(addHostVehicle.currency=="KSh")Obx(() {
                       return RadioListTile(
                           title: Row(
                             children: [

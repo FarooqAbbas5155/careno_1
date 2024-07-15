@@ -127,7 +127,7 @@ super.onInit();
 
   Stream<List<Booking>> FetchStartedBookingLists() {
     return bookingsRef
-        .where("bookingStatus", whereIn: ["In progress", "Pending Approval"])
+        .where("bookingStatus", whereIn: ["In progress", "Payment Pending"])
         .where("userId", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
         .snapshots()
         .map((querySnapshot) {
@@ -140,7 +140,7 @@ super.onInit();
 
   Stream<List<Booking>> FetchRequestedBookingLists() {
     return bookingsRef
-        .where("bookingStatus",isEqualTo: "Request Pending")
+        .where("bookingStatus",isEqualTo: ["Request Pending"])
         .where("userId", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
         .snapshots()
         .map((querySnapshot) {

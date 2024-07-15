@@ -47,5 +47,25 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+
+		<!-- Permissions -->
+		<key>NSCameraUsageDescription</key>
+		<string>We need access to your camera to take photos and videos.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>We need access to your photo library to select photos and videos.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>We need access to your location while you are using the app to provide location-based features.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>We need access to your location at all times to provide location-based features.</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>We need access to your location at all times to provide location-based features.</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>We need access to your microphone to record audio.</string>
+		<key>NSContactsUsageDescription</key>
+		<string>We need access to your contacts to share and connect with people you know.</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>We need permission to save photos and videos to your photo library.</string>
+		<key>NSRemindersUsageDescription</key>
+		<string>We need access to your reminders to manage your tasks.</string>
 	</dict>
 </plist>
