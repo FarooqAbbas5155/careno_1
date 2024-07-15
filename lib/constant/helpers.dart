@@ -192,6 +192,7 @@ Future<Widget> getHomeScreen() async {
           screen = ScreenHostAddIdentIdentityProof();
         }
         else if (user.isVerified == true) {
+          hasAddedVehicle=await userHasAddedVehicle();
           if (hasAddedVehicle == false) {
             screen = ScreenHostAddVehicle();
           }

@@ -26,7 +26,8 @@ class ScreenHostAddVehicle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ControllerHostAddVechicle controllerAddVehicle = Get.put(ControllerHostAddVechicle());
+    ControllerHostAddVechicle controllerAddVehicle = Get.put(
+        ControllerHostAddVechicle());
     print(controllerAddVehicle.showLoading.value);
     // controllerAddVehicle.showLoading.value = false;
     return SafeArea(
@@ -106,7 +107,6 @@ class ScreenHostAddVehicle extends StatelessWidget {
                                 e
                                     .toString())
                                 .toList();
-
                       });
                       controller.update();
                     }, "Add More Images",
@@ -115,14 +115,16 @@ class ScreenHostAddVehicle extends StatelessWidget {
                   ],
                 ),
                 Obx(() {
-                  return (controllerAddVehicle.vehicleMore.value.isEmpty)?SizedBox():SizedBox(
+                  return (controllerAddVehicle.vehicleMore.value.isEmpty)
+                      ? SizedBox()
+                      : SizedBox(
                     height: 90.h,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: controllerAddVehicle.vehicleMore.value.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
-                          margin: EdgeInsets.only(top: 10.h,right: 10.w),
+                          margin: EdgeInsets.only(top: 10.h, right: 10.w),
                           height: 89.h,
                           width: 92.w,
                           decoration: BoxDecoration(
@@ -193,20 +195,25 @@ class ScreenHostAddVehicle extends StatelessWidget {
                 ).marginSymmetric(vertical: 8.h),
                 buildCurrencyContainer(controllerAddVehicle, context),
 
-                CustomTextField(
-                  readOnly: controllerAddVehicle.showLoading.value,
+                Obx(() {
+                  return CustomTextField(
+                    readOnly: controllerAddVehicle.showLoading.value,
 
-                  controller: controllerAddVehicle.vehiclePerDayRent,
-                  hint: "Per Day Rent ${controllerAddVehicle.currency.value}",
-                  keyboardType: TextInputType.number,
-                ).marginSymmetric(vertical: 8.h),
-                CustomTextField(
-                  readOnly: controllerAddVehicle.showLoading.value,
+                    controller: controllerAddVehicle.vehiclePerDayRent,
+                    hint: "Per Day Rent ${controllerAddVehicle.currency.value}",
+                    keyboardType: TextInputType.number,
+                  );
+                }).marginSymmetric(vertical: 8.h),
+                Obx(() {
+                  return CustomTextField(
+                    readOnly: controllerAddVehicle.showLoading.value,
 
-                  controller: controllerAddVehicle.vehiclePerHourRent,
-                  hint: "Per Hours Rent ${controllerAddVehicle.currency.value}",
-                  keyboardType: TextInputType.number,
-                ).marginSymmetric(vertical: 8.h),
+                    controller: controllerAddVehicle.vehiclePerHourRent,
+                    hint: "Per Hours Rent ${controllerAddVehicle.currency
+                        .value}",
+                    keyboardType: TextInputType.number,
+                  );
+                }).marginSymmetric(vertical: 8.h),
                 // buildVehicleNumberPlate(controllerAddVehicle),
 
                 Obx(() {
@@ -387,7 +394,6 @@ class ScreenHostAddVehicle extends StatelessWidget {
   // }
 
 
-
   Widget buildCategoryContainer(ControllerHostAddVechicle controllerAddVehicle,
       BuildContext context) {
     var categoryName = "";
@@ -438,8 +444,10 @@ class ScreenHostAddVehicle extends StatelessWidget {
                 onSelected: (Category choice) {
                   // Update selected category when an option is chosen
                   setState(() {
-                    controllerAddVehicle.selectCategory.value = choice.id.toString();
-                    controllerAddVehicle.selectCategoryName.value = choice.name.toString();
+                    controllerAddVehicle.selectCategory.value = choice.id
+                        .toString();
+                    controllerAddVehicle.selectCategoryName.value = choice.name
+                        .toString();
                   });
                 },
               ).marginOnly(top: 4.h),
@@ -547,7 +555,8 @@ class ScreenHostAddVehicle extends StatelessWidget {
     });
   }
 
-  Obx buildFuelContainer(ControllerHostAddVechicle controllerAddVehicle, BuildContext context) {
+  Obx buildFuelContainer(ControllerHostAddVechicle controllerAddVehicle,
+      BuildContext context) {
     return Obx(() {
       return CustomTextField(
         padding: EdgeInsets.only(left: 18.w, top: 18.h),
@@ -585,7 +594,9 @@ class ScreenHostAddVehicle extends StatelessWidget {
       );
     });
   }
-  Obx buildCurrencyContainer(ControllerHostAddVechicle controllerAddVehicle, BuildContext context) {
+
+  Obx buildCurrencyContainer(ControllerHostAddVechicle controllerAddVehicle,
+      BuildContext context) {
     return Obx(() {
       return CustomTextField(
         padding: EdgeInsets.only(left: 18.w, top: 18.h),
