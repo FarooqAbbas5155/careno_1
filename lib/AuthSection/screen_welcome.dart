@@ -119,10 +119,10 @@ class ScreenWelcome extends StatelessWidget {
                             title: 'Next',
                             onPressed: () async {
                               Get.to(ScreenCompleteProfile());
-        
+
                               // var response = await controller.updateUserType();
                               // if (response == "success") {
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("content")));
+                              //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("content")));
                                 // Get.to(ScreenCompleteProfile());
                               // }
                               //   else {

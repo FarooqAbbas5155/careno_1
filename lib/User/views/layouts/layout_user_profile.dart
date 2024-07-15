@@ -2,6 +2,11 @@ import 'dart:developer';
 
 import 'package:careno/AuthSection/screen_login.dart';
 import 'package:careno/User/views/screens/screen_user_favorite_vehicles.dart';
+import 'package:careno/controllers/booking_controller.dart';
+import 'package:careno/controllers/controller_edit_profile.dart';
+import 'package:careno/controllers/controller_filter.dart';
+import 'package:careno/controllers/controller_host_home.dart';
+import 'package:careno/controllers/controller_update_profile.dart';
 import 'package:careno/controllers/home_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -257,8 +262,15 @@ class LayoutUserProfile extends StatelessWidget {
                                       title: "Yes, logout",
                                       onPressed: () {
                                         FirebaseAuth.instance.signOut().then((value) {
-                                          controller.clearController();
                                           Get.offAll(ScreenLogin());
+
+                                          controller.dispose();
+                                          Get.find<ControllerFilter>().dispose();
+                                          Get.find<BookingController>().dispose();
+                                          Get.find<ControllerEditProfile>().dispose();
+                                          Get.find<ControllerUpdateProfile>().dispose();
+                                          Get.find<ControllerHostHome>().dispose();
+
                                         });
                                       }).marginSymmetric(vertical: 20.h)
                                 ],

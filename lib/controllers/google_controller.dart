@@ -40,10 +40,10 @@ class GoogleController extends GetxController {
         userType: "",
         phoneNumber: phoneNo ?? "",
         imageUrl: image,
-        name: '',
-        email: '',
+        name: name,
+        email: user.email ?? "",
         profileDescription: '',
-        dob:  0,
+        dob: 0,
         lat: 0.0,
         lng: 0.0,
         uid: uid,
@@ -52,7 +52,9 @@ class GoogleController extends GetxController {
         notificationToken: '',
         timeStamp: DateTime.now().millisecondsSinceEpoch,
         isVerified: false,
-        isBlocked: false, status: '', address: '', /*currentBalance: 0.0*/
+        isBlocked: false,
+        status: '',
+        address: '', /*currentBalance: 0.0*/
       );
       ;
       await usersRef.doc(user.uid).set(_user.toMap()).then((value) {
