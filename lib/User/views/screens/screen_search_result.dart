@@ -73,7 +73,7 @@ class _ScreenSearchResultState extends State<ScreenSearchResult> {
                       color: Colors.black,
                       fontSize: 14.sp,
                       fontFamily: "Urbanist"),
-                  hintText: "Search Car Mode Name...",
+                  // hintText: "Search Car Mode Name...",
                   contentPadding: EdgeInsets.only(left: 12, top: 15.h),
                   fillColor: Color(0xffF0F0F0),
                   prefixIcon: Icon(
