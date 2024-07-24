@@ -40,6 +40,7 @@ class ScreenCarDetails extends StatelessWidget {
       addHostVehicle!.vehicleImageRightSide,
       ...addHostVehicle!.imagesUrl
     ];
+
     return SafeArea(
         child: Scaffold(
       body: FutureBuilder(
@@ -75,8 +76,11 @@ class ScreenCarDetails extends StatelessWidget {
                               outer: false,
                               itemBuilder: (c, i) {
                                 return GestureDetector(
-                                  onTap: (){
-                                    Get.to(FullImageView(imageUrl: imageUrl[i],));
+                                  onTap: () {
+                                    Get.to(FullImageView(
+                                      imageUrl: imageUrl[i],
+                                      des: addHostVehicle!.vehicleDescription,
+                                    ));
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -204,7 +208,8 @@ class ScreenCarDetails extends StatelessWidget {
                           bottom: 20.h,
                           child: RichText(
                             text: TextSpan(
-                              text: '${addHostVehicle!.currency}${addHostVehicle!.vehiclePerDayRent}',
+                              text:
+                                  '${addHostVehicle!.currency}${addHostVehicle!.vehiclePerDayRent}',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: "UrbanistBold",
@@ -322,7 +327,10 @@ class ScreenCarDetails extends StatelessWidget {
                     ).marginOnly(
                         left: 10.w, right: 10.w, top: 8.h, bottom: 12.h),
                     StreamBuilder<QuerySnapshot>(
-                        stream: reviewRef.where("vehicleId", isEqualTo: addHostVehicle!.vehicleId).snapshots(),
+                        stream: reviewRef
+                            .where("vehicleId",
+                                isEqualTo: addHostVehicle!.vehicleId)
+                            .snapshots(),
                         builder: (BuildContext context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -367,7 +375,10 @@ class ScreenCarDetails extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              Get.to(ScreenAllReviews(ratingList: ratings, addHostVehicle: addHostVehicle!,));
+                                              Get.to(ScreenAllReviews(
+                                                ratingList: ratings,
+                                                addHostVehicle: addHostVehicle!,
+                                              ));
                                             },
                                             child: Text(
                                               "See all ",
@@ -387,7 +398,8 @@ class ScreenCarDetails extends StatelessWidget {
                                         itemCount: ratings.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
-                                          return ItemVehicleReview(rating:ratings[index]);
+                                          return ItemVehicleReview(
+                                              rating: ratings[index]);
                                         },
                                       )
                                     ],
